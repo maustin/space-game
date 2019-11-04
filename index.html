@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Space Game!</title>
+    <meta name="description" content="Space Game">
+    <meta name="author" content="Michael Austin">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <div class="select-arms">
+        <h1>Arm Yourself</h1>
+        <p class="text-center">Select 3 modules to load onto your ship.<br>You must select at least one offensive module.</p>
+        <br>
+        <hr>
+        <div class="mods-grid">
+            <div class="left-mods-group">
+                <h4>Offensive Mods</h4>
+                <label class="check-container">Lasers
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="check-container">Gauss Cannon
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="check-container">Torpedoes
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="check-container">Assault Drones
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <div class="right-mods-group">
+                <h4>Support Mods</h4>
+                <label class="check-container">Laser Amplifier
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="check-container">Gauss Charger
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="check-container">Point Defense System
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="check-container">Drone Uplink Scrambler
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="check-container">Shield Modulator
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="check-container">Heavy Armor
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    
+    <script src="modules/main.mjs"></script>
+</body>
+</html>
