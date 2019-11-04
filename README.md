@@ -38,6 +38,8 @@ Drone Uplink Scrambler | Reduces drone damage by 50%
 Shield Modulator | Increase shield power by 50%
 Heavy Armor | Increase armor by 50%
 
+_All values are subject to change during playtesting!_
+
 ## Stretch Goals
 - Online PVP play
 - More ship designs
@@ -55,9 +57,14 @@ For my stretch goal of online PVP play, I'm considering (on advice from Tyler) [
 
 ## Mockups
 ![Splash Screen](/mockups/Splash Screen.png)
+
 ![Instructions](/mockups/Instructions.png)
+
 ![Pregame](/mockups/Play - Pregame.png)
+
 ![Select Action](/mockups/Play - Select Action.png)
+
 ![Round Resolution](/mockups/Play - Turn Resolution.png)
+
 ![Game Over](/mockups/Play - Game over.png)
 
