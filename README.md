@@ -3,6 +3,8 @@
 
 ## Description
 Two ships face off in an epic 1v1 space battle!
+The base game will allow the player to battle against a computer opponent.
+A **stretch goal** will be to allow PVP combat between two human players over the internet.
 
 ## How It Works
 First, each player will select 3 modules (out of a possible 10) to load onto their ships. Once modules are selected, battle will begin.
@@ -36,5 +38,26 @@ Drone Uplink Scrambler | Reduces drone damage by 50%
 Shield Modulator | Increase shield power by 50%
 Heavy Armor | Increase armor by 50%
 
+## Stretch Goals
+- Online PVP play
+- More ship designs
+- More weapon types
+- Mode mods
+
+## Potential Libraries
+For the base game functionality, I'm looking at [CreateJS](https://createjs.com/). The benefits I think this library will bring are:
+- Hierarchical display list (I'm a Flash veteran, I *need* this!)
+- Eases working with bitmaps in canvas
+- Animated bitmaps
+- Robust tweening library
+
+For my stretch goal of online PVP play, I'm considering (on advice from Tyler) [Socket.IO](https://socket.io/).
 
 ## Mockups
+![Splash Screen](/mockups/Splash Screen.png)
+![Instructions](/mockups/Instructions.png)
+![Pregame](/mockups/Play - Pregame.png)
+![Select Action](/mockups/Play - Select Action.png)
+![Round Resolution](/mockups/Play - Turn Resolution.png)
+![Game Over](/mockups/Play - Game over.png)
+
