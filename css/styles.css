@@ -15,18 +15,40 @@ h4 {
     font-size: 18px;
 }
 
-.select-arms {
-    width: 800px;
-    display: inline-block;
-    background: #0F000F;
-    position: absolute;
-}
-
 canvas {
     position: absolute;
     z-index: 0;
 }
 
+.select-arms {
+    width: 800px;
+    display: inline-block;
+    background: #220022;
+    position: absolute;
+}
+
+/* Tooltips */
+/*.tooltip:hover {
+    position: relative;
+}
+
+.tooltip:hover::before {
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #999999;
+    content: attr(data-tip);
+    color: #ffffff;
+    position: absolute;
+    bottom: 100%;
+    width: 100px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-bottom: 15px;
+    font-size: 10px;
+}*/
+
+
+/* Armament Grid */
 .mods-grid {
 	display: grid;
 	grid-template-columns: auto 300px 300px auto;
