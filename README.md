@@ -57,9 +57,14 @@ For my stretch goal of online PVP play, I'm considering (on advice from Tyler) [
 
 ## Mockups
 ![Splash Screen](/mockups/Splash&#32;Screen.png)
+
 ![Instructions](/mockups/Instructions.png)
+
 ![Pregame](/mockups/Play&#32;-&#32;Pregame.png)
+
 ![Select Action](/mockups/Play&#32;-&#32;Select&#32;Action.png)
+
 ![Round Resolution](/mockups/Play&#32;-&#32;Turn&#32;Resolution.png)
+
 ![Game Over](/mockups/Play&#32;-&#32;Game&#32;over.png)
 
