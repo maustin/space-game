@@ -56,15 +56,10 @@ For the base game functionality, I'm looking at [CreateJS](https://createjs.com/
 For my stretch goal of online PVP play, I'm considering (on advice from Tyler) [Socket.IO](https://socket.io/).
 
 ## Mockups
-![Splash Screen]("/mockups/Splash Screen.png")
-
+![Splash Screen](/mockups/Splash&#32;Screen.png)
 ![Instructions](/mockups/Instructions.png)
-
-![Pregame]("/mockups/Play - Pregame.png")
-
-![Select Action]("/mockups/Play - Select Action.png")
-
-![Round Resolution]("/mockups/Play - Turn Resolution.png")
-
-![Game Over]("/mockups/Play - Game over.png")
+![Pregame](/mockups/Play&#32;-&#32;Pregame.png)
+![Select Action](/mockups/Play&#32;-&#32;Select&#32;Action.png)
+![Round Resolution](/mockups/Play&#32;-&#32;Turn&#32;Resolution.png)
+![Game Over](/mockups/Play&#32;-&#32;Game&#32;over.png)
 
