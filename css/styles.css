@@ -11,6 +11,12 @@ body {
     font-family: 'Exo 2', sans-serif;
 }
 
+/*div {
+    width: 800;
+    align-self: center;
+    background: #000000;
+}*/
+
 h1, h2, h3, h4, p, label {
     color: #1eb7d9;
 }
@@ -33,6 +39,30 @@ h4 {
 canvas {
     position: absolute;
     z-index: 0;
+}
+
+meter {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Firefox */
+    background: #545454;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+meter::-moz-meter-bar {
+    background: #0084ff;
+}
+
+meter::-webkit-meter-bar {
+    background: #545454;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+meter::-webkit-meter-optimum-value {
+    background: #0084ff;
 }
 
 .footer {
@@ -59,14 +89,16 @@ canvas {
     background-color: #2791a8;
 }*/
 
+
+
 /* select arms screen */
-.select-arms {
+.select-arms-screen {
     width: 800px;
     height: 600px;
     /*background: rgba(0, 0, 0, .5);*/
     position: absolute;
-    display: grid;
-    /*grid-template-rows: auto auto 100px;*/
+    /*display: grid;*/
+    display: none;
     grid-template-rows: auto;
 }
 
@@ -106,16 +138,19 @@ canvas {
     grid-column:  3;
 }
 
-/*div {
-    width: 800;
-    align-self: center;
-    background: #000000;
-}*/
+
+/* Battle screen */
+.battle-screen {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    display: grid;
+}
 
 
 
 /* Custom Checkboxes */
-/* Below sourced from https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
+/* Below insprired from https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
  /* Customize the label (the container) */
 .check-container {
   display: block;
