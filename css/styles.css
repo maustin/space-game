@@ -126,17 +126,17 @@ meter::-webkit-meter-even-less-good-value {
     margin-bottom: 100px;
 }
 
-.play-single {
+#play-single {
     font-size: 28px;
     cursor: pointer;
 }
 
-.play-multi {
+#play-multi {
     opacity: 0.5;
     font-size: 22px;
 }
 
-.play-instructions {
+#play-instructions {
     cursor: pointer;
     font-size: 22px;
 }
@@ -274,7 +274,7 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 /* Game Over */
-.game-over {
+.game-over-screen {
     display: none;
     /*display: flex;*/
     flex-direction: column;
