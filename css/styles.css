@@ -2,6 +2,13 @@
 /*
 font-family: 'Exo 2', sans-serif;
 */
+@font-face {
+    font-family: 'Slant';
+    src: url('/fonts/subset-Slant.woff2') format('woff2'),
+        url('/fonts/subset-Slant.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
 
 body {
     width: 800px;
@@ -101,6 +108,56 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 
+/* Splash screen */
+.splash-screen {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    display: none;
+}
+
+.title {
+    font-family: 'Slant', sans-serif;
+    font-size: 80px;
+    font-style: normal;
+    font-weight: normal;
+    margin-bottom: 100px;
+}
+
+.play-single {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.play-multi {
+    opacity: 0.5;
+    font-size: 22px;
+}
+
+.play-instructions {
+    cursor: pointer;
+    font-size: 22px;
+}
+
+/* Instructions screen */
+.instructions-screen {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    display: none;
+    /*display: flex;*/
+    flex-direction: column;
+}
+
+.instructions-content {
+    width: 600px;
+    margin: 0 auto 50px auto;
+}
+
+.instructions-footer {
+    text-align: center;
+}
+
 
 /* select arms screen */
 .select-arms-screen {
@@ -119,17 +176,17 @@ meter::-webkit-meter-even-less-good-value {
     color: #1b869e;
 }
 
-.header {
+.arms-header {
     grid-row: 1;
     /*background: rgba(255, 0, 0, .5);*/
 }
 
-.content {
+.arms-content {
     grid-row: 2;
     /*background: rgba(0, 255, 0, .5);*/
 }
 
-.footer {
+.arms-footer {
     grid-row:  3;
     /*background: rgba(0, 0, 255, .5);*/
 }
@@ -214,7 +271,8 @@ meter::-webkit-meter-even-less-good-value {
 
 /* Game Over */
 .game-over {
-    display: flex;
+    display: none;
+    /*display: flex;*/
     flex-direction: column;
     justify-content: space-between;
     height: 180px;

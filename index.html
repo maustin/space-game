@@ -13,14 +13,38 @@
 <body>
     <canvas id="canvas" width="800" height="600"></canvas>
 
-    
+    <section class="splash-screen">
+        <header class="splash-header">
+            <h1 class="title">Space Game</h1>
+        </header>
+        <div class="splash-menu">
+            <p class="play-single text-center">Play</p>
+            <p class="play-multi text-center">Play Online</p>
+            <p class="play-instructions text-center">Instructions</p>
+        </div>
+        <div class="splash-buffer"></div>
+        <footer class="splash-footer">
+        </footer>
+    </section>
+
+    <section class="instructions-screen">
+        <header class="instructions-header">
+            <h1>INSTRUCTIONS</h1>
+        </header>
+        <div class="instructions-content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc congue nisi vitae suscipit. Mattis aliquam faucibus purus in massa tempor. Cras tincidunt lobortis feugiat vivamus at augue eget arcu dictum.<br><br>In ornare quam viverra orci sagittis. Morbi enim nunc faucibus a pellentesque sit amet porttitor eget. Semper viverra nam libero justo laoreet sit amet.</p>
+        </div>
+        <footer class="instructions-footer">
+            <a href="#" class="continue-button">BACK</a>
+        </footer>
+    </section>
 
     <section class="select-arms-screen">
-        <header class="header">
+        <header class="arms-header">
             <h1>SELECT ARMAMENTS</h1>
             <p class="text-center">Select 3 modules to load onto your ship.<br>You must select at least one offensive module.</p>
         </header>
-        <div class="mods-grid content">
+        <div class="mods-grid arms-content">
             <div class="left-mods-group">
                 <h4>OFFENSIVE MODS</h4>
                 <label class="check-container tooltip">Lasers
@@ -78,16 +102,7 @@
                 </label>
             </div>
         </div>
-        <footer class="footer">
-            <a href="#" class="continue-button">CONTINUE</a>
-        </footer>
-    </section>
-
-    <section class="game-over">
-        <header>
-            <h1>Player 1 Wins!</h1>
-        </header>
-        <footer class="footer">
+        <footer class="arms-footer">
             <a href="#" class="continue-button">CONTINUE</a>
         </footer>
     </section>
@@ -132,6 +147,15 @@
                 <meter value=".8"></meter>
             </div>
         </div>
+    </section>
+
+    <section class="game-over">
+        <header>
+            <h1>Player 1 Wins!</h1>
+        </header>
+        <footer class="footer">
+            <a href="#" class="continue-button">MENU</a>
+        </footer>
     </section>
     
     <script src="modules/main.mjs"></script>
