@@ -42,13 +42,16 @@ canvas {
 }
 
 meter {
-    -webkit-appearance: none;
+    height: 4px;
+    width: 200px;
+    margin: 0;
+    /*-webkit-appearance: none;*/
     -moz-appearance: none;
     appearance: none;
-    /* Firefox */
-    background: #545454;
     box-shadow: none;
     border-radius: 0;
+    /* Firefox */
+    background: #545454;
 }
 
 meter::-moz-meter-bar {
@@ -57,11 +60,11 @@ meter::-moz-meter-bar {
 
 meter::-webkit-meter-bar {
     background: #545454;
-    box-shadow: none;
-    border-radius: 0;
 }
 
-meter::-webkit-meter-optimum-value {
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value {
     background: #0084ff;
 }
 
@@ -147,6 +150,20 @@ meter::-webkit-meter-optimum-value {
     display: grid;
 }
 
+.battle-stats-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px;
+}
+
+.battle-stats-row p {
+    margin-top: 3px;
+    margin-bottom: -12px;
+}
+
+.battle-stats-right {
+    text-align: right;
+}
 
 
 /* Custom Checkboxes */
