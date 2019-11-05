@@ -9,6 +9,10 @@ body {
     margin: auto;
     background-color: #090909;
     font-family: 'Exo 2', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /*div {
@@ -92,6 +96,10 @@ meter::-webkit-meter-even-less-good-value {
     background-color: #2791a8;
 }*/
 
+.diminish {
+    opacity: 0.6;
+}
+
 
 
 /* select arms screen */
@@ -147,13 +155,52 @@ meter::-webkit-meter-even-less-good-value {
     width: 800px;
     height: 600px;
     position: absolute;
-    display: grid;
+    /*display: flex;*/
+    display: none;
+    flex-direction: column;
+}
+
+.battle-round-result {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.battle-action-row {
+    display: none;
+    /*display: flex;*/
+    justify-content: center;
+}
+
+.battle-action-left p {
+    font-size: 20px;
+    cursor: pointer;
+    padding-left: 15px;
+    margin-bottom: -5px;
+}
+
+.battle-action-right {
+    margin-bottom: -5px;
+}
+
+.battle-action-left p:hover {
+    color: #00d2ff;
+}
+
+.battle-action-buffer {
+    width: 100px;
+}
+/*.battle-action-left {
+    margin-right: 20px;
+}*/
+
+.battle-screen-buffer {
+    flex-grow: 1;
 }
 
 .battle-stats-row {
     display: flex;
     justify-content: space-between;
-    margin: 0 20px;
+    margin: 0 20px 20px 20px;
 }
 
 .battle-stats-row p {
@@ -163,6 +210,17 @@ meter::-webkit-meter-even-less-good-value {
 
 .battle-stats-right {
     text-align: right;
+}
+
+/* Game Over */
+.game-over {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 180px;
+    width: 800px;
+    position: absolute;
+    margin: 0 auto;
 }
 
 
@@ -176,10 +234,6 @@ meter::-webkit-meter-even-less-good-value {
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 20px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 /* Hide the browser's default checkbox */

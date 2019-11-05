@@ -13,42 +13,7 @@
 <body>
     <canvas id="canvas" width="800" height="600"></canvas>
 
-    <section class="battle-screen">
-        <header class="header">
-            <h1>Round X</h1>
-        </header>
-        <div class="battle-action-row">
-            <div class="battle-action-left">
-                <h4>SELECT ACTION</h4>
-                <p>Fire Lasers</p>
-                <p>Launch Drones</p>
-            </div>
-            <div class="battle-action-right diminish">
-                <h4>YOUR EQUIPMENT</h4>
-                <p>Lasers</p>
-                <p>Assault Drones</p>
-                <p>Shield Modulator</p>
-            </div>
-        </div>
-        <div class="battle-stats-row">
-            <div class="battle-stats-left">
-                <p>Shields: 80/100</p>
-                <meter value="0.8"></meter>
-                <p>Armor: 62/100</p>
-                <meter value="0.62"></meter>
-                <p>Structure: 10/10</p>
-                <meter value="1"></meter>
-            </div>
-            <div class="battle-stats-right">
-                <p>Shields: 52/100</p>
-                <meter value="0.52"></meter>
-                <p>Armor: 33/100</p>
-                <meter value="0.33"></meter>
-                <p>Structure: 8/10</p>
-                <meter value=".8"></meter>
-            </div>
-        </div>
-    </section>
+    
 
     <section class="select-arms-screen">
         <header class="header">
@@ -116,6 +81,57 @@
         <footer class="footer">
             <a href="#" class="continue-button">CONTINUE</a>
         </footer>
+    </section>
+
+    <section class="game-over">
+        <header>
+            <h1>Player 1 Wins!</h1>
+        </header>
+        <footer class="footer">
+            <a href="#" class="continue-button">CONTINUE</a>
+        </footer>
+    </section>
+
+    <section class="battle-screen">
+        <header class="header">
+            <h1>Round X</h1>
+        </header>
+        <div class="battle-round-result">
+            <p>Player 1 fires Gauss cannon for 12 points of damage vs Player 2 shields.<br>Player 2 fires Torpedo, but it is destroyed by Player 1 Point Defense.</p>
+        </div>
+        <div class="battle-action-row">
+            <div class="battle-action-left">
+                <h4>SELECT ACTION</h4>
+                <p>Fire Lasers</p>
+                <p>Launch Drones</p>
+            </div>
+            <div class="battle-action-buffer"></div>
+            <div class="battle-action-right diminish">
+                <h4>YOUR EQUIPMENT</h4>
+                <p>Lasers</p>
+                <p>Assault Drones</p>
+                <p>Shield Modulator</p>
+            </div>
+        </div>
+        <div class="battle-screen-buffer"></div>
+        <div class="battle-stats-row">
+            <div class="battle-stats-left">
+                <p>Shields: 80/100</p>
+                <meter value="0.8"></meter>
+                <p>Armor: 62/100</p>
+                <meter value="0.62"></meter>
+                <p>Structure: 10/10</p>
+                <meter value="1"></meter>
+            </div>
+            <div class="battle-stats-right">
+                <p>Shields: 52/100</p>
+                <meter value="0.52"></meter>
+                <p>Armor: 33/100</p>
+                <meter value="0.33"></meter>
+                <p>Structure: 8/10</p>
+                <meter value=".8"></meter>
+            </div>
+        </div>
     </section>
     
     <script src="modules/main.mjs"></script>
