@@ -79,23 +79,12 @@ meter::-webkit-meter-even-less-good-value {
     background: #0084ff;
 }
 
-.footer {
-    /* I kinda feel like flexbox is overkill just to center the
-    continue button... but it works.*/
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
 .continue-button {
     background-color: #1eb7d9;
     cursor: pointer;
     color: #FFFFFF;
     font-size: 20px;
     padding: 10px 50px;
-    /*position: relative;
-    bottom: 20px;*/
-
     text-decoration: none;
 }
 
@@ -107,6 +96,18 @@ meter::-webkit-meter-even-less-good-value {
     opacity: 0.6;
 }
 
+/* Loading */
+.loading-screen {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    text-align: center;
+}
+
+.loading-message {
+    margin-top: 250px;
+    font-size: 32px;
+}
 
 /* Splash screen */
 .splash-screen {
@@ -114,6 +115,7 @@ meter::-webkit-meter-even-less-good-value {
     height: 600px;
     position: absolute;
     display: none;
+    /*display: block;*/
 }
 
 .title {
@@ -170,23 +172,20 @@ meter::-webkit-meter-even-less-good-value {
     grid-template-rows: auto;
 }
 
-.arms-detail {
-    display: block;
-    font-size: 12px;
-    color: #1b869e;
-}
-
 .arms-header {
     grid-row: 1;
     /*background: rgba(255, 0, 0, .5);*/
 }
 
 .arms-content {
+    margin-top: -40px;
+    margin-bottom: 10px;
     grid-row: 2;
     /*background: rgba(0, 255, 0, .5);*/
 }
 
 .arms-footer {
+    text-align: center;
     grid-row:  3;
     /*background: rgba(0, 0, 255, .5);*/
 }
@@ -206,6 +205,12 @@ meter::-webkit-meter-even-less-good-value {
     grid-column:  3;
 }
 
+.arms-detail {
+    display: block;
+    font-size: 12px;
+    color: #1b869e;
+}
+
 
 /* Battle screen */
 .battle-screen {
@@ -220,11 +225,13 @@ meter::-webkit-meter-even-less-good-value {
 .battle-round-result {
     width: 600px;
     margin: 0 auto;
+    /*display: block;*/
+    display: none;
 }
 
 .battle-action-row {
-    display: none;
-    /*display: flex;*/
+    /*display: none;*/
+    display: flex;
     justify-content: center;
 }
 
@@ -246,9 +253,6 @@ meter::-webkit-meter-even-less-good-value {
 .battle-action-buffer {
     width: 100px;
 }
-/*.battle-action-left {
-    margin-right: 20px;
-}*/
 
 .battle-screen-buffer {
     flex-grow: 1;
@@ -279,6 +283,10 @@ meter::-webkit-meter-even-less-good-value {
     width: 800px;
     position: absolute;
     margin: 0 auto;
+}
+
+.game-over-footer {
+    text-align: center;
 }
 
 
