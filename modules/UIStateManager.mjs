@@ -59,6 +59,7 @@ class UIStateManager {
 		this.currentState = nextState;
 		this.currentState.element.style.display = this.currentState.mode;
 
+		dispatchEvent(new Event('state_changed'));// TODO: testing
 		dispatchEvent(new Event(this.currentState.event));
 	}
 

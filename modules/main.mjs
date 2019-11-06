@@ -35,6 +35,8 @@ function handleJSONLoaded(response) {
 	uiManager.init();
 
 	canvasHandler.playCircuits();
+
+	//setTimeout(() => canvasHandler.stop(), 3000);
 }
 
 loadJSON("./assets/mods.json", handleJSONLoaded);
