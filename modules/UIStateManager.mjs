@@ -2,40 +2,36 @@ import { UI_STATES } from './UIStates.mjs';
 
 class UIStateManager {
 	constructor() {
-		// This is JavaScript. I don't think I need to pass a reference
-		// to the document when it's a readily accessible global.
-		//this.dom = dom;
-		this.currentState = UI_STATES[0];// assumptions are baaad
+		this.currentState = UI_STATES[0];// assumption 
 
 		for (let state of UI_STATES) {
 			state.element = document.querySelector(state.id);
 			for (let link of state.links) {
-				// HACK! Hardcoding this so I can worry about other things first.
-				if (link.buttonId == '#arms-continue')
-					link.canContinue = this.validateArmsSelected;
-
 				let button = document.querySelector(link.buttonId);
 				if (button != null) {
 					/* EXISTENTIAL CRISIS */
 					// The following is not possible in other languages I've worked on
-					// and would prob be poor OOP. But it's a feature of JS....
+					// and is poor OOP. But it's possible in JS....
 					button.targetId = link.targetId;
 					button.canContinue = link.canContinue;
 
-					button.addEventListener('click', event=>this.buttonClickHandler(event));
+					button.addEventListener('click', event=> {
+						event.preventDefault();
+						this.buttonClickHandler(event);
+					});
 				}
 			}
 		}
 	}
 
 	init() {
-		// Another dirty dirty assumption about this array
+		// TODO: eliminate this assumption
 		this.activateState(UI_STATES[1].id);
 	}
 
 	buttonClickHandler(event) {
 		let button = event.currentTarget;
-		if (button.canContinue == null || button.canContinue()) {
+		if (button.canContinue == null || this[button.canContinue]()) {
 			this.activateState(button.targetId);
 		}
 		else {
@@ -44,7 +40,8 @@ class UIStateManager {
 	}
 
 	validateArmsSelected() {
-		return true;
+		let leftGroup = document.querySelector('.left-mods-group');
+		return leftGroup.querySelectorAll('input:checked').length > 0;
 	}
 
 	activateState(stateId) {
@@ -62,20 +59,20 @@ class UIStateManager {
 		dispatchEvent(new CustomEvent('state_changed', { detail: this.currentState.invoke }));
 	}
 
-	setArmsContent(modsJSON) {
+	setModsContent(modsData) {
 		let modTeplate = document.querySelector('#mod-template');
 		let offensiveMods = document.querySelector('.left-mods-group');
 		let supportMods = document.querySelector('.right-mods-group');
 
-		for (let data of modsJSON.mods) {
+		for (let data of modsData) {
 			let newMod = document.importNode(modTeplate.content, true);
 			let input = newMod.querySelector('input');
 			let label = newMod.querySelector('label');
 			label.querySelector('.mod-title').innerText = data.name;
 			label.querySelector('.arms-detail').innerText = this.formatModDescription(data);
 			input.addEventListener('change', (event)=>{ this.modSelectHandler(event) });
-			// ActionScript me hates the following.
-			newMod.json = data;
+			
+			label.setAttribute('modid', data.id);
 
 			if (data.isOffensive) {
 				offensiveMods.appendChild(newMod);
@@ -109,14 +106,17 @@ class UIStateManager {
 		let unselectedMods = Array.from(leftGroup.querySelectorAll('input:not(:checked)')).concat(
 			Array.from(rightGroup.querySelectorAll('input:not(:checked)')));
 
-		console.log("Selected " + selectedMods.length);
-		console.log("Unselected " + unselectedMods.length);
-
 		if (selectedMods.length == 3)
 			this.setModsIsDisabled(true, unselectedMods);
 		else if (selectedMods.length < 3)
 			this.setModsIsDisabled(false, unselectedMods);
 		// TODO: check for cheating? Keyboard tabbing can get to the disabled mods
+
+		let selectedModIds = [];
+		selectedMods.forEach(element => selectedModIds.push(element.parentElement.getAttribute('modid')));
+		dispatchEvent(new CustomEvent('mod_selection_changed', { detail: selectedModIds }));
+
+		// TODO: Enable/disable continue button
 	}
 
 	setModsIsDisabled(isDisabled, mods) {

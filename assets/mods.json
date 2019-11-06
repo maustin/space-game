@@ -1,7 +1,9 @@
 {"mods":[
 	{
+		"id":"laser",
 		"name":"Lasers",
 		"description":"Deals $val damage, double vs Shields",
+		"useMessage": "Fire Lasers",
 		"isOffensive":true,
 		"mod_type":"active",
 		"damage_type":"laser",
@@ -11,8 +13,10 @@
 		"onActivate":"activateLasers"
 	},
 	{
+		"id":"gauss",
 		"name":"Gauss Cannon",
 		"description":"Deals $val damage, double vs Armor",
+		"useMessage": "Fire Gauss Cannon",
 		"isOffensive":true,
 		"mod_type":"active",
 		"damage_type":"gauss",
@@ -22,30 +26,36 @@
 		"onActivate":"activateGauss"
 	},
 	{
+		"id":"torpedo",
 		"name":"Torpedoes",
 		"description":"Deals $val damage",
+		"useMessage": "Launch Torpedo",
 		"isOffensive":true,
 		"mod_type":"active",
 		"damage_type":"torpedo",
-		"adjust_value":5,
+		"adjust_value":10,
 		"adjust_scale":"absolute",
 		"hit_chance":1,
 		"onActivate":"activateMod"
 	},
 	{
+		"id":"drones",
 		"name":"Assualt Drones",
 		"description":"Deal $val damage",
+		"useMessage": "Launch Drones",
 		"isOffensive":true,
 		"mod_type":"active",
 		"damage_type":"drone",
-		"adjust_value":5,
+		"adjust_value":10,
 		"adjust_scale":"absolute",
 		"hit_chance":1,
 		"onActivate":"activateMod"
 	},
 	{
+		"id":"laser_amp",
 		"name":"Laser Focus",
 		"description":"Increases laser damage by $val",
+		"useMessage": "",
 		"isOffensive":false,
 		"mod_type":"boost",
 		"damage_type":"laser",
@@ -55,8 +65,10 @@
 		"onActivate":""
 	},
 	{
+		"id":"gauss_amp",
 		"name":"Gauss Charger",
 		"description":"Increases gauss damage by $val",
+		"useMessage": "",
 		"isOffensive":false,
 		"mod_type":"boost",
 		"damage_type":"gauss",
@@ -66,8 +78,10 @@
 		"onActivate":""
 	},
 	{
+		"id":"anti_torpedo",
 		"name":"Point Defense System",
 		"description":"$hit chance to destroy incoming torpedoes",
+		"useMessage": "",
 		"isOffensive":false,
 		"mod_type":"react",
 		"damage_type":"torpedo",
@@ -77,8 +91,10 @@
 		"onActivate":""
 	},
 	{
+		"id":"anti_drone",
 		"name":"Drone Uplink Scrambler",
 		"description":"Reduce enemy drone damage by $val",
+		"useMessage": "",
 		"isOffensive":false,
 		"mod_type":"react",
 		"damage_type":"drone",
@@ -88,8 +104,10 @@
 		"onActivate":""
 	},
 	{
+		"id":"shield_amp",
 		"name":"Shield Modulator",
 		"description":"Increases shield power by $val",
+		"useMessage": "",
 		"isOffensive":false,
 		"mod_type":"passive",
 		"damage_type":"shield",
@@ -99,8 +117,10 @@
 		"onActivate":""
 	},
 	{
+		"id":"armor_amp",
 		"name":"Heavy Armor",
 		"description":"Increases armor strength by $val",
+		"useMessage": "",
 		"isOffensive":false,
 		"mod_type":"passive",
 		"damage_type":"armor",

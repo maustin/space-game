@@ -19,7 +19,8 @@ const UI_STATES = [
 		{
 			buttonId: "#play-multi",
 			targetId: "",
-			canContinue: () => { return false; }
+			canContinue: null
+			//canContinue: () => { return false; }
 		},
 		{
 			buttonId: "#play-instructions",
@@ -48,7 +49,7 @@ const UI_STATES = [
 		{
 			buttonId: "#arms-continue",
 			targetId: ".battle-screen",
-			canContinue: null // this will be set by GameMaster or UIStateManager
+			canContinue: "validateArmsSelected"
 		}],
 		element: null,
 	},

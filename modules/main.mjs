@@ -30,8 +30,9 @@ function loadJSON(path, callback) {
 }
 
 function handleJSONLoaded(response) {
-	let json = JSON.parse(response);
-	uiManager.setArmsContent(json);
+	let modsData = JSON.parse(response);
+	uiManager.setModsContent(modsData.mods);
+	gm.setModsContent(modsData.mods);
 	uiManager.init();
 
 	canvasHandler.playCircuits();

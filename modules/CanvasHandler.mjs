@@ -24,6 +24,10 @@ class CanvasHandler {
 		this.clear();
 	}
 
+	playStarfield() {
+		
+	}
+
 	playCircuits() {
 		this.circuitBlips = [];
 		this.clear();
@@ -122,7 +126,7 @@ class CanvasHandler {
 	}
 
 	stop() {
-		console.log("GOT STOP");
+		//console.log("GOT STOP");
 		this.doRenderLoop = false;
 	}
 
