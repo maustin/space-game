@@ -96,6 +96,11 @@ meter::-webkit-meter-even-less-good-value {
     opacity: 0.6;
 }
 
+.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 /* Loading */
 .loading-screen {
     width: 800px;

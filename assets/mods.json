@@ -1,0 +1,112 @@
+{"mods":[
+	{
+		"name":"Lasers",
+		"description":"Deals $val damage, double vs Shields",
+		"isOffensive":true,
+		"mod_type":"active",
+		"damage_type":"laser",
+		"adjust_value":10,
+		"adjust_scale":"absolute",
+		"hit_chance":1,
+		"onActivate":"activateLasers"
+	},
+	{
+		"name":"Gauss Cannon",
+		"description":"Deals $val damage, double vs Armor",
+		"isOffensive":true,
+		"mod_type":"active",
+		"damage_type":"gauss",
+		"adjust_value":10,
+		"adjust_scale":"absolute",
+		"hit_chance":1,
+		"onActivate":"activateGauss"
+	},
+	{
+		"name":"Torpedoes",
+		"description":"Deals $val damage",
+		"isOffensive":true,
+		"mod_type":"active",
+		"damage_type":"torpedo",
+		"adjust_value":5,
+		"adjust_scale":"absolute",
+		"hit_chance":1,
+		"onActivate":"activateMod"
+	},
+	{
+		"name":"Assualt Drones",
+		"description":"Deal $val damage",
+		"isOffensive":true,
+		"mod_type":"active",
+		"damage_type":"drone",
+		"adjust_value":5,
+		"adjust_scale":"absolute",
+		"hit_chance":1,
+		"onActivate":"activateMod"
+	},
+	{
+		"name":"Laser Focus",
+		"description":"Increases laser damage by $val",
+		"isOffensive":false,
+		"mod_type":"boost",
+		"damage_type":"laser",
+		"adjust_value":50,
+		"adjust_scale":"percent",
+		"hit_chance":1,
+		"onActivate":""
+	},
+	{
+		"name":"Gauss Charger",
+		"description":"Increases gauss damage by $val",
+		"isOffensive":false,
+		"mod_type":"boost",
+		"damage_type":"gauss",
+		"adjust_value":50,
+		"adjust_scale":"percent",
+		"hit_chance":1,
+		"onActivate":""
+	},
+	{
+		"name":"Point Defense System",
+		"description":"$hit chance to destroy incoming torpedoes",
+		"isOffensive":false,
+		"mod_type":"react",
+		"damage_type":"torpedo",
+		"adjust_value":-100,
+		"adjust_scale":"percent",
+		"hit_chance":0.5,
+		"onActivate":""
+	},
+	{
+		"name":"Drone Uplink Scrambler",
+		"description":"Reduce enemy drone damage by $val",
+		"isOffensive":false,
+		"mod_type":"react",
+		"damage_type":"drone",
+		"adjust_value":-50,
+		"adjust_scale":"percent",
+		"hit_chance":1,
+		"onActivate":""
+	},
+	{
+		"name":"Shield Modulator",
+		"description":"Increases shield power by $val",
+		"isOffensive":false,
+		"mod_type":"passive",
+		"damage_type":"shield",
+		"adjust_value":50,
+		"adjust_scale":"percent",
+		"hit_chance":1,
+		"onActivate":""
+	},
+	{
+		"name":"Heavy Armor",
+		"description":"Increases armor strength by $val",
+		"isOffensive":false,
+		"mod_type":"passive",
+		"damage_type":"armor",
+		"adjust_value":50,
+		"adjust_scale":"percent",
+		"hit_chance":1,
+		"onActivate":""
+	}
+]}

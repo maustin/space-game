@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <template id="mod-template">
+        <label class="check-container">
+            <span class="mod-title">Item Name</span>
+            <input type="checkbox">
+            <span class="checkmark"></span>
+            <span class="arms-detail">Item Description</span>
+        </label>
+    </template>
+
     <canvas id="canvas" width="800" height="600"></canvas>
 
     <section class="loading-screen">
@@ -51,7 +60,7 @@
         <div class="mods-grid arms-content">
             <div class="left-mods-group">
                 <h4>OFFENSIVE MODS</h4>
-                <label class="check-container tooltip">Lasers
+                <!--<label class="check-container">Lasers
                     <input type="checkbox">
                     <span class="checkmark"></span><br>
                     <span class="arms-detail">Deals 10 points damage, double vs Shields</span>
@@ -70,11 +79,11 @@
                     <input type="checkbox">
                     <span class="checkmark"></span>
                     <span class="arms-detail">Deals 5 points damage</span>
-                </label>
+                </label>-->
             </div>
             <div class="right-mods-group">
                 <h4>SUPPORT MODS</h4>
-                <label class="check-container">Laser Amplifier
+                <!--<label class="check-container">Laser Amplifier
                     <input type="checkbox">
                     <span class="checkmark"></span>
                     <span class="arms-detail">Increase laser damage by 50%</span>
@@ -103,7 +112,7 @@
                     <input type="checkbox">
                     <span class="checkmark"></span>
                     <span class="arms-detail">Increase armor strength by 50%</span>
-                </label>
+                </label>-->
             </div>
         </div>
         <footer class="arms-footer">
