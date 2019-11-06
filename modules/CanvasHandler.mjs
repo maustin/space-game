@@ -1,6 +1,6 @@
 
 const CIRCUIT_SPACE = 15;
-const CIRCUIT_MAX_BLIPS = 10;
+const CIRCUIT_MAX_BLIPS = 20;
 
 // JS has really poor image/pixel manipulation compared to
 // ActionScript. But, I will do my best. /rant
@@ -67,14 +67,6 @@ class CanvasHandler {
 	}
 
 	buildCircuitBlip() {
-		/*for (let i = 0; i < CIRCUIT_MAX_BLIPS; i++) {
-			let blip = {
-				x: Math.floor(Math.random() * (this.canvas.width / CIRCUIT_SPACE)) * CIRCUIT_SPACE,
-				y: Math.floor(Math.random() * (this.canvas.height / CIRCUIT_SPACE)) * CIRCUIT_SPACE,
-				d: Math.floor(Math.random() * 4)
-			};
-			this.circuitBlips.push(blip);
-		}*/
 		return {
 			x: Math.floor(Math.random() * (this.canvas.width / CIRCUIT_SPACE)) * CIRCUIT_SPACE,
 			y: Math.floor(Math.random() * (this.canvas.height / CIRCUIT_SPACE)) * CIRCUIT_SPACE,
@@ -87,14 +79,25 @@ class CanvasHandler {
 			this.circuitBlips.push(this.buildCircuitBlip());
 		}
 
-		for (let i = this.circuitBlips.length - 1; i > -1; i--) {
-		//for (let blip of this.circuitBlips) {
+		outer:for (let i = this.circuitBlips.length - 1; i > -1; i--) {
 			let blip = this.circuitBlips[i];
 
-			if (blip.d == 0) blip.y--;
-			else if (blip.d == 1) blip.x++;
-			else if (blip.d == 2) blip.y++;
-			else if (blip.d == 3) blip.x--;
+			for (let k = 0; k < 3; k++) {
+				if (blip.d == 0) blip.y--;
+				else if (blip.d == 1) blip.x++;
+				else if (blip.d == 2) blip.y++;
+				else if (blip.d == 3) blip.x--;
+
+				// handle out of bounds
+				if (blip.x < 0 || blip.x >= this.canvas.width ||
+					blip.y < 0 || blip.y >= this.canvas.height) {
+					this.circuitBlips.splice(i, 1);
+					continue outer;
+				}
+
+				//this.setPixel(this.overlayImageData, blip.x, blip.y, 0, 255, 0);	
+				this.setPixel(this.overlayImageData, blip.x, blip.y, 3, 248, 252);
+			}
 
 			// Check for direction choice
 			if (blip.x % CIRCUIT_SPACE == 0 && blip.y % CIRCUIT_SPACE == 0){
@@ -109,15 +112,6 @@ class CanvasHandler {
 
 				blip.d = newD;
 			}
-
-			// handle out of bounds
-			if (blip.x < 0 || blip.x >= this.canvas.width ||
-				blip.y < 0 || blip.y >= this.canvas.height) {
-				this.circuitBlips.splice(i, 1);
-				continue;
-			}
-
-			this.setPixel(this.overlayImageData, blip.x, blip.y, 0, 255, 0);
 		}
 	}
 
@@ -153,8 +147,8 @@ class CanvasHandler {
 				let pixelIndex = (y * w + x) * 4;
 				let val = imageData.data[pixelIndex + 3];
 				if (val > 0) {
-					val *= 0.75;
-					if (val < 30)
+					val *= 0.95;
+					if (val < 10)
 						val = 0;
 
 					imageData.data[pixelIndex + 3] = val;

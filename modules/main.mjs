@@ -34,7 +34,7 @@ function handleJSONLoaded(response) {
 	uiManager.setArmsContent(json);
 	uiManager.init();
 
-	canvasHandler.playCircuits();
+	//canvasHandler.playCircuits();
 
 	//setTimeout(() => canvasHandler.stop(), 3000);
 }
