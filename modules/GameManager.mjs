@@ -3,11 +3,33 @@ class GameManager {
 		this.uiStateManager = uiStateManager;
 		this.canvasHandler = canvasHandler;
 
-		//this.uiStateManager.addEventListener('state_changed', (event) => { handleUIStateChanged(event); });
+		addEventListener('state_changed', (event) => { this.handleUIStateChanged(event) });
 	}
 
 	handleUIStateChanged(event) {
-		//this.canvasHandler.stop();
+		this.canvasHandler.stop();
+		if (this[event.detail] != undefined)
+			this[event.detail]();
+	}
+
+	activateSplash() {
+		console.log('activateSplash');
+	}
+
+	activateInstructions() {
+		console.log('activateInstructions');
+	}
+
+	activateArms() {
+		console.log('activateArms');
+	}
+
+	activateBattle() {
+		console.log('activateBattle');
+	}
+
+	activateGameOver() {
+		console.log('activateGameOver');
 	}
 }
 

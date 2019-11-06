@@ -2,14 +2,14 @@ const UI_STATES = [
 	{
 		id: ".loading-screen",
 		mode: "block",
-		event: "",
+		invoke: "",
 		links: [],
 		element: null
 	},
 	{
 		id: ".splash-screen",
 		mode: "block",
-		event: "activate_splash",
+		invoke: "activateSplash",
 		links: [
 		{
 			buttonId: "#play-single",
@@ -31,7 +31,7 @@ const UI_STATES = [
 	{
 		id: ".instructions-screen",
 		mode: "flex",
-		event: "activate_instructions",
+		invoke: "activateInstructions",
 		links: [
 		{
 			buttonId: "#instructions-continue",
@@ -43,7 +43,7 @@ const UI_STATES = [
 	{
 		id: ".select-arms-screen",
 		mode: "grid",
-		event: "activate_arms",
+		invoke: "activateArms",
 		links: [
 		{
 			buttonId: "#arms-continue",
@@ -55,14 +55,14 @@ const UI_STATES = [
 	{
 		id: ".battle-screen",
 		mode: "flex",
-		event: "activate_battle",
+		invoke: "activateBattle",
 		links: [],
 		element: null
 	},
 	{
 		id: ".game-over-screen",
 		mode: "flex",
-		event: "activate_game_over",
+		invoke: "activateGameOver",
 		links: [
 		{
 			buttonId: "#game-over-continue",

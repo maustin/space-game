@@ -4,6 +4,7 @@ const CIRCUIT_MAX_BLIPS = 20;
 
 // JS has really poor image/pixel manipulation compared to
 // ActionScript. But, I will do my best. /rant
+// (at least until )
 class CanvasHandler {
 	constructor() {
 		this.canvas = document.querySelector('#canvas');
@@ -43,13 +44,13 @@ class CanvasHandler {
 
 		for (let x = 0; x <= w; x += CIRCUIT_SPACE) {
 			for (let y = 0; y <= h; y++) {
-				this.setPixel(imageData, x, y, 0, 25, 0);
+				this.setPixel(imageData, x, y, 0, 15, 38);
 			}
 		}
 
 		for (let x = 0; x <= w; x++) {
 			for (let y = 0; y <= h; y += CIRCUIT_SPACE) {
-				this.setPixel(imageData, x, y, 0, 25, 0);
+				this.setPixel(imageData, x, y, 0, 15, 38);
 			}
 		}
 
@@ -96,7 +97,8 @@ class CanvasHandler {
 				}
 
 				//this.setPixel(this.overlayImageData, blip.x, blip.y, 0, 255, 0);	
-				this.setPixel(this.overlayImageData, blip.x, blip.y, 3, 248, 252);
+				//this.setPixel(this.overlayImageData, blip.x, blip.y, 3, 248, 252);
+				this.setPixel(this.overlayImageData, blip.x, blip.y, 0, 78, 204);
 			}
 
 			// Check for direction choice

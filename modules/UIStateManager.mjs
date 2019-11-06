@@ -11,7 +11,7 @@ class UIStateManager {
 			state.element = document.querySelector(state.id);
 			for (let link of state.links) {
 				// HACK! Hardcoding this so I can worry about other things first.
-				if (link.buttonId == "#arms-continue")
+				if (link.buttonId == '#arms-continue')
 					link.canContinue = this.validateArmsSelected;
 
 				let button = document.querySelector(link.buttonId);
@@ -39,7 +39,7 @@ class UIStateManager {
 			this.activateState(button.targetId);
 		}
 		else {
-			console.log("Button " + button.id + " failed canContinue()");
+			console.log('Button ' + button.id + ' failed canContinue()');
 		}
 	}
 
@@ -50,30 +50,30 @@ class UIStateManager {
 	activateState(stateId) {
 		let nextState = UI_STATES.find(state => state.id == stateId);
 		if (nextState == null) {
-			console.log("ERROR: Cannot find state with id '" + stateId + "'");
+			console.log('ERROR: Cannot find state with id: ' + stateId);
 			return;
 		}
 
-		this.currentState.element.style.display = "none";
+		this.currentState.element.style.display = 'none';
 
 		this.currentState = nextState;
 		this.currentState.element.style.display = this.currentState.mode;
 
-		dispatchEvent(new Event('state_changed'));// TODO: testing
-		dispatchEvent(new Event(this.currentState.event));
+		dispatchEvent(new CustomEvent('state_changed', { detail: this.currentState.invoke }));
 	}
 
 	setArmsContent(modsJSON) {
-		let modTeplate = document.querySelector("#mod-template");
-		let offensiveMods = document.querySelector(".left-mods-group");
-		let supportMods = document.querySelector(".right-mods-group");
+		let modTeplate = document.querySelector('#mod-template');
+		let offensiveMods = document.querySelector('.left-mods-group');
+		let supportMods = document.querySelector('.right-mods-group');
 
 		for (let data of modsJSON.mods) {
 			let newMod = document.importNode(modTeplate.content, true);
-			let label = newMod.querySelector("label");
-			label.querySelector(".mod-title").innerText = data.name;
-			label.querySelector(".arms-detail").innerText = this.formatModDescription(data);
-			newMod.addEventListener('change', (event)=>{ this.modSelectHandler(event) });
+			let input = newMod.querySelector('input');
+			let label = newMod.querySelector('label');
+			label.querySelector('.mod-title').innerText = data.name;
+			label.querySelector('.arms-detail').innerText = this.formatModDescription(data);
+			input.addEventListener('change', (event)=>{ this.modSelectHandler(event) });
 			// ActionScript me hates the following.
 			newMod.json = data;
 
@@ -89,10 +89,10 @@ class UIStateManager {
 	formatModDescription(modJson) {
 		let str = modJson.description;
 		if (str.includes('$hit')) {
-			str = str.replace('$hit', (modJson.hit_chance * 100) + "%");
+			str = str.replace('$hit', (modJson.hit_chance * 100) + '%');
 		}
 		else if (str.includes('$val')) {
-			let temp = modJson.adjust_value + (modJson.adjust_scale == "percent" ? "%" : " points");
+			let temp = modJson.adjust_value + (modJson.adjust_scale == 'percent' ? '%' : ' points');
 			str = str.replace('$val', temp);
 		}
 
@@ -100,7 +100,27 @@ class UIStateManager {
 	}
 
 	modSelectHandler(event) {
-		// do thing
+		let numSelected = 0;
+		let leftGroup = document.querySelector('.left-mods-group');
+		let rightGroup = document.querySelector('.right-mods-group');
+
+		let selectedMods = Array.from(leftGroup.querySelectorAll('input:checked')).concat(
+			Array.from(rightGroup.querySelectorAll('input:checked')));
+		let unselectedMods = Array.from(leftGroup.querySelectorAll('input:not(:checked)')).concat(
+			Array.from(rightGroup.querySelectorAll('input:not(:checked)')));
+
+		console.log("Selected " + selectedMods.length);
+		console.log("Unselected " + unselectedMods.length);
+
+		if (selectedMods.length == 3)
+			this.setModsIsDisabled(true, unselectedMods);
+		else if (selectedMods.length < 3)
+			this.setModsIsDisabled(false, unselectedMods);
+		// TODO: check for cheating? Keyboard tabbing can get to the disabled mods
+	}
+
+	setModsIsDisabled(isDisabled, mods) {
+		mods.forEach(element => element.parentElement.classList.toggle('is-disabled', isDisabled));
 	}
 }
 
