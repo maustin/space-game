@@ -240,24 +240,24 @@ meter::-webkit-meter-even-less-good-value {
     justify-content: center;
 }
 
-.battle-action-left p {
-    font-size: 20px;
+.battle-actions p {
+    font-size: 22px;
     cursor: pointer;
-    padding-left: 15px;
+    padding-left: 25px;
     margin-bottom: -5px;
 }
 
-.battle-action-right {
+/*.battle-action-right {
     margin-bottom: -5px;
-}
+}*/
 
-.battle-action-left p:hover {
+.battle-actions p:hover {
     color: #00d2ff;
 }
 
-.battle-action-buffer {
+/*.battle-action-buffer {
     width: 100px;
-}
+}*/
 
 .battle-screen-buffer {
     flex-grow: 1;

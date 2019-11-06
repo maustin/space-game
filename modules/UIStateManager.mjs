@@ -9,9 +9,7 @@ class UIStateManager {
 			for (let link of state.links) {
 				let button = document.querySelector(link.buttonId);
 				if (button != null) {
-					/* EXISTENTIAL CRISIS */
-					// The following is not possible in other languages I've worked on
-					// and is poor OOP. But it's possible in JS....
+					// TODO: This should prob be attributes or dataset
 					button.targetId = link.targetId;
 					button.canContinue = link.canContinue;
 
@@ -115,12 +113,33 @@ class UIStateManager {
 		let selectedModIds = [];
 		selectedMods.forEach(element => selectedModIds.push(element.parentElement.getAttribute('modid')));
 		dispatchEvent(new CustomEvent('mod_selection_changed', { detail: selectedModIds }));
-
-		// TODO: Enable/disable continue button
 	}
 
 	setModsIsDisabled(isDisabled, mods) {
 		mods.forEach(element => element.parentElement.classList.toggle('is-disabled', isDisabled));
+	}
+
+	showBattleOptions(actionableMods) {
+		console.log(actionableMods);
+		let actionsContainer = document.querySelector('.battle-actions');
+
+		actionableMods.forEach(mod => {
+			let action = document.createElement('p');
+			action.innerText = mod.useMessage;
+			action.setAttribute('modid', mod.id);
+			action.addEventListener('click', event => this.actionSelectHandler(event));
+			actionsContainer.appendChild(action);
+		});
+	}
+
+	actionSelectHandler(event) {
+		dispatchEvent(new CustomEvent('battle_option_selected', {
+			detail: event.currentTarget.getAttribute('modid')
+		}));
+	}
+
+	showBattleResult() {
+
 	}
 }
 

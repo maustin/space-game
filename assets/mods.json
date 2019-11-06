@@ -2,7 +2,7 @@
 	{
 		"id":"laser",
 		"name":"Lasers",
-		"description":"Deals $val damage, double vs Shields",
+		"description":"Deals $val damage, weak vs Shields",
 		"useMessage": "Fire Lasers",
 		"isOffensive":true,
 		"mod_type":"active",
@@ -15,7 +15,7 @@
 	{
 		"id":"gauss",
 		"name":"Gauss Cannon",
-		"description":"Deals $val damage, double vs Armor",
+		"description":"Deals $val damage, weak vs Armor",
 		"useMessage": "Fire Gauss Cannon",
 		"isOffensive":true,
 		"mod_type":"active",
@@ -110,7 +110,7 @@
 		"useMessage": "",
 		"isOffensive":false,
 		"mod_type":"passive",
-		"damage_type":"shield",
+		"damage_type":"shields",
 		"adjust_value":50,
 		"adjust_scale":"percent",
 		"hit_chance":1,
@@ -118,7 +118,7 @@
 	},
 	{
 		"id":"armor_amp",
-		"name":"Heavy Armor",
+		"name":"Kinetic Armor",
 		"description":"Increases armor strength by $val",
 		"useMessage": "",
 		"isOffensive":false,

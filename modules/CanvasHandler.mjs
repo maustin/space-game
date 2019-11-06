@@ -4,7 +4,6 @@ const CIRCUIT_MAX_BLIPS = 20;
 
 // JS has really poor image/pixel manipulation compared to
 // ActionScript. But, I will do my best. /rant
-// (at least until )
 class CanvasHandler {
 	constructor() {
 		this.canvas = document.querySelector('#canvas');
