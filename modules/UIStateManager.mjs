@@ -119,8 +119,28 @@ class UIStateManager {
 		mods.forEach(element => element.parentElement.classList.toggle('is-disabled', isDisabled));
 	}
 
+	updateBattleStats(player1, player2) {
+		this.updatePlayerStats(player1, document.querySelector('.battle-stats-left'));
+		this.updatePlayerStats(player2, document.querySelector('.battle-stats-right'));
+	}
+
+	updatePlayerStats(player, container) {
+		let shieldValue = container.querySelector('.shield-value');
+		let shieldMeter = container.querySelector('.shield-meter');
+		let armorValue = container.querySelector('.armor-value');
+		let armorMeter = container.querySelector('.armor-meter');
+		let structureValue = container.querySelector('.structure-value');
+		let structureMeter = container.querySelector('.structure-meter');
+
+		shieldValue.innerText = player.shields + "/" + player.shieldsMax;
+		shieldMeter.value = player.shields / player.shieldsMax;
+		armorValue.innerText = player.armor + "/" + player.armorMax;
+		armorMeter.value = player.armor / player.armorMax;
+		structureValue.innerText = player.structure + "/" + player.structureMax;
+		structureMeter.value = player.structure / player.structureMax;
+	}
+
 	showBattleOptions(actionableMods) {
-		console.log(actionableMods);
 		let actionsContainer = document.querySelector('.battle-actions');
 
 		actionableMods.forEach(mod => {

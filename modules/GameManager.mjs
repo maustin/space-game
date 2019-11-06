@@ -56,7 +56,14 @@ class GameManager {
 	}
 
 	handleBattleOptionSelected(event) {
-		console.log("Selected " + event.detail);
+		//console.log("Selected " + event.detail);
+		this.player1.activatedMod = this.modsData.find(mod => mod.id == event.detail);
+
+		// Get AI play
+		let aiOptions = this.player2.mods.filter(mod => mod.isOffensive);
+		this.player2.activatedMod = aiOptions[Math.floor(Math.random() * aiOptions.length)];
+
+
 	}
 
 	activateSplash() {
@@ -78,7 +85,9 @@ class GameManager {
 		// build players
 		this.player1 = this.buildPlayer(this.selectedModIds);
 		this.player2 = this.buildPlayer();
+
 		// build UI
+		this.uiStateManager.updateBattleStats(this.player1, this.player2);
 		this.uiStateManager.showBattleOptions(this.player1.mods.filter(mod => mod.isOffensive));
 		// listen for action
 	}
