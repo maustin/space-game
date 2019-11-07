@@ -1,27 +1,32 @@
+import { AssetLibrary, AssetInstance } from './AssetLibrary.mjs';
 import { BattleAction } from './BattleAction.mjs';
 
-const BATTLE_MESSAGE_SUCCESS = "message_success";
-const BATTLE_MESSAGE_MISSED = "message_missed";
-const BATTLE_MESSAGE_FAILED = "message_failed";
+const STARTING_SHIELDS = 30;
+const STARTING_ARMOR = 30;
+const STARTING_STRUCTURE = 10;
+
+const BATTLE_MESSAGE_SUCCESS = 'message_success';
+const BATTLE_MESSAGE_MISSED = 'message_missed';
+const BATTLE_MESSAGE_FAILED = 'message_failed';
 
 class Player {
-	constructor(name, mods) {
-		//this.id;
-		// TODO: Starting values from somewhere
+	constructor(name, mods, assetInstance) {
 		this.name = name;
-		this.shieldsMax = 1;
-		this.armorMax = 1;
-		this.structureMax = 10;
 		this.mods = mods;
+		this.assetInstance = assetInstance;
+		// TODO: Starting values should come from JSON or something
+		this.shieldsMax = STARTING_SHIELDS;
+		this.armorMax = STARTING_ARMOR;
+		this.structureMax = STARTING_STRUCTURE;
 		this.activatedMod = null;
 		this.round = 0;
 
 		mods.forEach(mod => {
-			if (mod.mod_type == "passive") {
+			if (mod.mod_type == 'passive') {
 				// a bit hard-coded here to save time
-				if (mod.damage_type == "shields")
+				if (mod.damage_type == 'shields')
 					this.shieldsMax += this.shieldsMax * mod.adjust_value;
-				if (mod.damage_type == "armor")
+				if (mod.damage_type == 'armor')
 					this.armorMax += this.armorMax * mod.adjust_value;
 			}
 		});
@@ -33,9 +38,10 @@ class Player {
 }
 
 class GameManager {
-	constructor(uiStateManager, canvasHandler) {
+	constructor(uiStateManager, canvasHandler, assetLibrary) {
 		this.uiStateManager = uiStateManager;
 		this.canvasHandler = canvasHandler;
+		this.assetLibrary = assetLibrary;
 		this.modsData = null;
 		this.player1 = null;
 		this.player2 = null;
@@ -45,7 +51,7 @@ class GameManager {
 
 		addEventListener('state_changed', event => this.handleUIStateChanged(event));
 		// I'd like to only add this when the player is on the correct screen,
-		// but removing it when they leave the arms screen is... difficult.
+		// but removing it when they leave the arms screen is... difficult. So it's here forever.
 		addEventListener('mod_selection_changed', event => this.handleModSelectionChanged(event));
 		addEventListener('battle_option_selected', event => this.handleBattleOptionSelected(event));
 	}
@@ -94,25 +100,28 @@ class GameManager {
 		this.round = 0;
 
 		// build players
-		this.player1 = this.buildPlayer("Player", this.selectedModIds);
-		this.player2 = this.buildPlayer("Computer");
+		this.player1 = this.buildPlayer('Player', this.selectedModIds, 'player1');
+		this.player2 = this.buildPlayer('Computer', null, 'player2');
 
 		// build UI
 		this.uiStateManager.updateBattleStats(this.player1, this.player2);
 
 		this.battleActions = [];
+
+		this.canvasHandler.setupBattleScreen(this.player1, this.player2);
 		
 		this.startBattleRound();
 	}
 
-	buildPlayer(name, selectedModIds) {
+	buildPlayer(name, selectedModIds, assetId) {
 		if (!selectedModIds) {
 			selectedModIds = this.getAIModIds();
 		}
 
 		let selectedMods = this.modsData.filter(mod => selectedModIds.indexOf(mod.id) > -1);
+		let assetInstance = this.assetLibrary.createInstance('player1');
 
-		return new Player(name, selectedMods);
+		return new Player(name, selectedMods, assetInstance);
 	}
 
 	startBattleRound() {

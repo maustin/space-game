@@ -1,21 +1,13 @@
 import { UIStateManager } from './UIStateManager.mjs';
 import { CanvasHandler } from './CanvasHandler.mjs';
 import { GameManager } from './GameManager.mjs';
+import { AssetLibrary } from './AssetLibrary.mjs';
 
-/*
-var canvas = document.querySelector("#canvas");
-var ctx = canvas.getContext("2d");
-
-ctx.beginPath();
-ctx.rect(0, 0, 800, 600);
-ctx.fillStyle = 'black';//'#FF00FF';
-ctx.fill();*/
-
+let assetLibrary = new AssetLibrary();
 let uiManager = new UIStateManager();
-let canvasHandler = new CanvasHandler();
-let gm = new GameManager(uiManager, canvasHandler);
-
-//uiManager.init();
+let canvasHandler = new CanvasHandler(assetLibrary);
+let gm = new GameManager(uiManager, canvasHandler, assetLibrary);
+let assetsManifest = null;
 
 function loadJSON(path, callback) {
 	var xobj = new XMLHttpRequest();
@@ -29,17 +21,41 @@ function loadJSON(path, callback) {
 	xobj.send(null);
 }
 
-function handleJSONLoaded(response) {
+function handleModsJSONLoaded(response) {
+	console.log("Mods JSON loaded");
 	let modsData = JSON.parse(response);
 	uiManager.setModsContent(modsData.mods);
 	gm.setModsContent(modsData.mods);
-	uiManager.init();
 
-	canvasHandler.playCircuits();
-
-	//setTimeout(() => canvasHandler.stop(), 3000);
+	loadJSON("./assets/assetsManifest.json", handleManifestJSONLoaded);
 }
 
-loadJSON("./assets/mods.json", handleJSONLoaded);
+function handleManifestJSONLoaded(response) {
+	console.log("Done manifest JSON loaded");
+	let manData = JSON.parse(response);
+	assetsManifest = manData.assets;
 
-console.log("I did a thing");
+	assetLibrary.setManifest(assetsManifest);
+
+	let paths = [];
+	assetsManifest.forEach(asset => paths.push(asset.path));
+
+	queue.loadManifest(paths);
+}
+
+function handleFileComplete(event) {
+	//console.log(event);
+	assetLibrary.addAsset(event);
+}
+
+function handleQueueComplete(event) {
+	console.log("load queue complete");
+	uiManager.init();
+	canvasHandler.playCircuits();
+}
+
+var queue = new createjs.LoadQueue(true);
+queue.on('fileload', handleFileComplete, this);
+queue.on('complete', handleQueueComplete, this);
+
+loadJSON("./assets/mods.json", handleModsJSONLoaded);

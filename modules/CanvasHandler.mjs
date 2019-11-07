@@ -1,11 +1,11 @@
+import { AssetLibrary, AssetInstance } from './AssetLibrary.mjs';
 
 const CIRCUIT_SPACE = 15;
 const CIRCUIT_MAX_BLIPS = 20;
 
-// JS has really poor image/pixel manipulation compared to
-// ActionScript. But, I will do my best. /rant
 class CanvasHandler {
-	constructor() {
+	constructor(assetLibrary) {
+		this.assetLibrary = assetLibrary;
 		this.canvas = document.querySelector('#canvas');
 		this.ctx = this.canvas.getContext('2d');
 
@@ -21,6 +21,38 @@ class CanvasHandler {
 
 		this.ctx.fillStyle = 'black';
 		this.clear();
+	}
+
+	test(item) {
+		this.ctx.drawImage(item, 0, 0);
+	}
+
+	setupBattleScreen(player1, player2) {
+		let w = this.canvas.width;
+		let h = this.canvas.height;
+		// bg is baseImageData with stars, neb, planet
+		// then ship layer
+		// then effects layer
+		// then weapons
+		let stars = this.assetLibrary.getImg('stars');
+		let nebula = this.assetLibrary.getRandomImg('nebula');
+		let planet = this.assetLibrary.getRandomImg('planet');
+
+		this.ctx.drawImage(stars, 0, 0);
+		this.ctx.drawImage(nebula, this.getNicePosition(nebula.width, w), this.getNicePosition(nebula.height, h));
+		this.ctx.drawImage(planet, this.getNicePosition(planet.width, w), this.getNicePosition(planet.height, h));
+
+		let imageData = this.ctx.getImageData(0, 0, w, h);
+		this.baseImageData = imageData;
+	}
+
+	getNicePosition(itemScalar, targetScalar) {
+		let itemOffset = itemScalar * 0.5;
+		let validTargetScalar = targetScalar * 0.9;
+		let targetOffset = targetScalar * 0.05;
+		
+		let offset = (Math.random() * validTargetScalar) + targetOffset - itemOffset;
+		return Math.floor(offset);
 	}
 
 	playStarfield() {
