@@ -119,7 +119,7 @@ class GameManager {
 		}
 
 		let selectedMods = this.modsData.filter(mod => selectedModIds.indexOf(mod.id) > -1);
-		let assetInstance = this.assetLibrary.createInstance('player1');
+		let assetInstance = this.assetLibrary.createInstance(assetId);
 
 		return new Player(name, selectedMods, assetInstance);
 	}

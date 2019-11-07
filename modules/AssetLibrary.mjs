@@ -1,8 +1,9 @@
 class Asset {
-    constructor(id, type, img) {
-        this.id = id;
-        this.type = type;
+    constructor(data, img) {
+        this.data = data;
         this.img = img;
+        this.id = data.id;
+        //this.type = data.type;
     }
 }
 
@@ -11,7 +12,6 @@ class AssetInstance {
         this.asset = asset;
         this.x = 0;
         this.y = 0;
-        this.data;
     }
 }
 
@@ -29,7 +29,7 @@ class AssetLibrary {
         let img = event.result;
         let path = event.item.id;
         let assetData = this.manifest.find(item => item.path == path);
-        this.library.push(new Asset(assetData.id, assetData.type, img));
+        this.library.push(new Asset(assetData, img));
     }
 
     getImg(id) {

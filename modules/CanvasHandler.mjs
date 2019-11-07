@@ -2,6 +2,8 @@ import { AssetLibrary, AssetInstance } from './AssetLibrary.mjs';
 
 const CIRCUIT_SPACE = 15;
 const CIRCUIT_MAX_BLIPS = 20;
+const SHIP_EDGE_OFFSET = 30;
+const SHIP_VERT_BASELINE = 250;
 
 class CanvasHandler {
 	constructor(assetLibrary) {
@@ -18,6 +20,9 @@ class CanvasHandler {
 		this.updateMethod = null;
 		this.baseImageData = null;
 		this.overlayImageData = null;
+		this.renderQueue = null;
+		//this.drawLayerShips = null;
+		//this.drawLayerEffects = null;
 
 		this.ctx.fillStyle = 'black';
 		this.clear();
@@ -30,6 +35,9 @@ class CanvasHandler {
 	setupBattleScreen(player1, player2) {
 		let w = this.canvas.width;
 		let h = this.canvas.height;
+
+		this.renderQueue = [];
+
 		// bg is baseImageData with stars, neb, planet
 		// then ship layer
 		// then effects layer
@@ -44,6 +52,22 @@ class CanvasHandler {
 
 		let imageData = this.ctx.getImageData(0, 0, w, h);
 		this.baseImageData = imageData;
+
+		player1.assetInstance.x = SHIP_EDGE_OFFSET;
+		player1.assetInstance.y = h - SHIP_VERT_BASELINE - player1.assetInstance.asset.img.height * 0.5;
+
+		player2.assetInstance.x = w - SHIP_EDGE_OFFSET - player2.assetInstance.asset.img.width;
+		player2.assetInstance.y = h - SHIP_VERT_BASELINE - player2.assetInstance.asset.img.height * 0.5;
+		this.renderQueue.push(player1.assetInstance, player2.assetInstance);
+
+		this.renderBattleScreen();
+	}
+
+	renderBattleScreen() {
+		this.ctx.putImageData(this.baseImageData, 0, 0);
+		for (let assetInstance of this.renderQueue) {
+			this.ctx.drawImage(assetInstance.asset.img, assetInstance.x, assetInstance.y);
+		}
 	}
 
 	getNicePosition(itemScalar, targetScalar) {

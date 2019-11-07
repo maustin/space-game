@@ -67,11 +67,17 @@
     {
         "path":"./assets/player-1.png",
         "id":"player1",
-        "type":"player"
+        "type":"player",
+        "data":{
+            "thing":"thing1"
+        }
     },
     {
         "path":"./assets/player-2.png",
         "id":"player2",
-        "type":"player"
+        "type":"player",
+        "data":{
+            "thing":"thing2"
+        }
     }
 ]}
