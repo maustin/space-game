@@ -43,7 +43,7 @@
 		"adjust_scale":"absolute",
 		"hit_chance":1,
 		"onActivate":"activateMod",
-		"message_success":"$souce fires Torpedoes and hit $target's $defense for $val points.",
+		"message_success":"$source fires Torpedoes and hit $target's $defense for $val points.",
 		"message_missed":"$source's Torpedoes missed their target!",
 		"message_failed":"$target intercepted $sources's Torpedoes!"
 	},

@@ -69,7 +69,48 @@
         "id":"player1",
         "type":"player",
         "data":{
-            "thing":"thing1"
+            "hardpoints":[
+                {
+                    "type":"laser",
+                    "x":97,
+                    "y":28
+                },
+                {
+                    "type":"laser",
+                    "x":97,
+                    "y":101
+                },
+                {
+                    "type":"laser",
+                    "x":106,
+                    "y":39
+                },
+                {
+                    "type":"laser",
+                    "x":106,
+                    "y":90
+                },
+                {
+                    "type":"gauss",
+                    "x":119,
+                    "y":15
+                },
+                {
+                    "type":"gauss",
+                    "x":119,
+                    "y":116
+                },
+                {
+                    "type":"torpedo",
+                    "x":57,
+                    "y":41
+                },
+                {
+                    "type":"torpedo",
+                    "x":57,
+                    "y":87
+                }
+            ]
         }
     },
     {
@@ -77,7 +118,48 @@
         "id":"player2",
         "type":"player",
         "data":{
-            "thing":"thing2"
+            "hardpoints":[
+                {
+                    "type":"laser",
+                    "x":86,
+                    "y":31
+                },
+                {
+                    "type":"laser",
+                    "x":86,
+                    "y":150
+                },
+                {
+                    "type":"laser",
+                    "x":8,
+                    "y":52
+                },
+                {
+                    "type":"laser",
+                    "x":8,
+                    "y":130
+                },
+                {
+                    "type":"gauss",
+                    "x":93,
+                    "y":5
+                },
+                {
+                    "type":"gauss",
+                    "x":93,
+                    "y":176
+                },
+                {
+                    "type":"torpedo",
+                    "x":52,
+                    "y":75
+                },
+                {
+                    "type":"torpedo",
+                    "x":52,
+                    "y":106
+                }
+            ]
         }
     }
 ]}
