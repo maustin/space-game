@@ -1,73 +1,63 @@
 {"assets":[
     {
-        "path":"./assets/stars.png",
-        "id":"stars",
-        "type":"stars"
+        "src":"./assets/mods.json",
+        "id":"mods"
     },
     {
-        "path":"./assets/planet-1.png",
-        "id":"planet-1",
-        "type":"planet"
+        "src":"./assets/stars.png",
+        "id":"stars"
     },
     {
-        "path":"./assets/planet-2.png",
-        "id":"planet-2",
-        "type":"planet"
+        "src":"./assets/planet-1.png",
+        "id":"planet-1"
     },
     {
-        "path":"./assets/planet-3.png",
-        "id":"planet-3",
-        "type":"planet"
+        "src":"./assets/planet-2.png",
+        "id":"planet-2"
     },
     {
-        "path":"./assets/planet-4.png",
-        "id":"planet-4",
-        "type":"planet"
+        "src":"./assets/planet-3.png",
+        "id":"planet-3"
     },
     {
-        "path":"./assets/planet-5.png",
-        "id":"planet-5",
-        "type":"planet"
+        "src":"./assets/planet-4.png",
+        "id":"planet-4"
     },
     {
-        "path":"./assets/planet-6.png",
-        "id":"planet-6",
-        "type":"planet"
+        "src":"./assets/planet-5.png",
+        "id":"planet-5"
     },
     {
-        "path":"./assets/planet-1.png",
-        "id":"planet-7",
-        "type":"planet"
+        "src":"./assets/planet-6.png",
+        "id":"planet-6"
     },
     {
-        "path":"./assets/nebula-1.png",
-        "id":"nebula-1",
-        "type":"nebula"
+        "src":"./assets/planet-1.png",
+        "id":"planet-7"
     },
     {
-        "path":"./assets/nebula-2.png",
-        "id":"nebula-2",
-        "type":"nebula"
+        "src":"./assets/nebula-1.png",
+        "id":"nebula-1"
     },
     {
-        "path":"./assets/nebula-3.png",
-        "id":"nebula-3",
-        "type":"nebula"
+        "src":"./assets/nebula-2.png",
+        "id":"nebula-2"
     },
     {
-        "path":"./assets/nebula-4.png",
-        "id":"nebula-4",
-        "type":"nebula"
+        "src":"./assets/nebula-3.png",
+        "id":"nebula-3"
     },
     {
-        "path":"./assets/nebula-5.png",
-        "id":"nebula-5",
-        "type":"nebula"
+        "src":"./assets/nebula-4.png",
+        "id":"nebula-4"
     },
     {
-        "path":"./assets/player-1.png",
+        "src":"./assets/nebula-5.png",
+        "id":"nebula-5"
+    },
+    {
+        "src":"./assets/player-1.png",
         "id":"player1",
-        "type":"player",
         "data":{
             "hardpoints":[
                 {
@@ -114,9 +104,8 @@
         }
     },
     {
-        "path":"./assets/player-2.png",
+        "src":"./assets/player-2.png",
         "id":"player2",
-        "type":"player",
         "data":{
             "hardpoints":[
                 {

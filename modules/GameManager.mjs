@@ -1,4 +1,5 @@
-import { AssetLibrary, AssetInstance } from './AssetLibrary.mjs';
+//import { AssetLibrary, AssetInstance } from './AssetLibrary.mjs';
+import { StageManager } from './StageManager.mjs';
 import { BattleAction } from './BattleAction.mjs';
 
 const STARTING_SHIELDS = 30;
@@ -9,11 +10,13 @@ const BATTLE_MESSAGE_SUCCESS = 'message_success';
 const BATTLE_MESSAGE_MISSED = 'message_missed';
 const BATTLE_MESSAGE_FAILED = 'message_failed';
 
+// TODO: This could extend Bitmap or such
 class Player {
-	constructor(name, mods, assetInstance) {
+	constructor(name, mods, displayObject) {
 		this.name = name;
 		this.mods = mods;
-		this.assetInstance = assetInstance;
+		this.displayObject = displayObject;
+		//this.assetInstance = assetInstance;
 		// TODO: Starting values should come from JSON or something
 		this.shieldsMax = STARTING_SHIELDS;
 		this.armorMax = STARTING_ARMOR;
@@ -38,10 +41,11 @@ class Player {
 }
 
 class GameManager {
-	constructor(uiStateManager, canvasHandler, assetLibrary) {
+	constructor(uiStateManager, stageManager) {
 		this.uiStateManager = uiStateManager;
-		this.canvasHandler = canvasHandler;
-		this.assetLibrary = assetLibrary;
+		//this.canvasHandler = canvasHandler;
+		//this.assetLibrary = assetLibrary;
+		this.stageManager = stageManager;
 		this.modsData = null;
 		this.player1 = null;
 		this.player2 = null;
@@ -61,7 +65,7 @@ class GameManager {
 	}
 
 	handleUIStateChanged(event) {
-		this.canvasHandler.stop();
+		//this.canvasHandler.stop();
 		if (this[event.detail] != undefined)
 			this[event.detail]();
 	}
@@ -98,17 +102,15 @@ class GameManager {
 	activateBattle() {
 		console.log('activateBattle');
 		this.round = 0;
+		this.battleActions = [];
 
 		// build players
 		this.player1 = this.buildPlayer('Player', this.selectedModIds, 'player1');
 		this.player2 = this.buildPlayer('Computer', null, 'player2');
 
-		// build UI
+		// build UI & canvas
 		this.uiStateManager.updateBattleStats(this.player1, this.player2);
-
-		this.battleActions = [];
-
-		this.canvasHandler.setupBattleScreen(this.player1, this.player2);
+		this.stageManager.setupBattleScreen(this.player1, this.player2);
 		
 		this.startBattleRound();
 	}
@@ -119,9 +121,9 @@ class GameManager {
 		}
 
 		let selectedMods = this.modsData.filter(mod => selectedModIds.indexOf(mod.id) > -1);
-		let assetInstance = this.assetLibrary.createInstance(assetId);
+		let displayObject = this.stageManager.createBitmap(assetId);
 
-		return new Player(name, selectedMods, assetInstance);
+		return new Player(name, selectedMods, displayObject);
 	}
 
 	startBattleRound() {
