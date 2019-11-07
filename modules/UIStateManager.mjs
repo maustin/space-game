@@ -87,7 +87,14 @@ class UIStateManager {
 			str = str.replace('$hit', (modJson.hit_chance * 100) + '%');
 		}
 		else if (str.includes('$val')) {
-			let temp = modJson.adjust_value + (modJson.adjust_scale == 'percent' ? '%' : ' points');
+			let temp;
+			if (modJson.adjust_scale == 'percent') {
+				temp = (modJson.adjust_value * 100) + "%";
+			}
+			else {
+				temp = modJson.adjust_value + " points";
+			}
+			//let temp = modJson.adjust_value + (modJson.adjust_scale == 'percent' ? '%' : ' points');
 			str = str.replace('$val', temp);
 		}
 
@@ -141,6 +148,10 @@ class UIStateManager {
 	}
 
 	showBattleOptions(actionableMods) {
+		// TODO: should not be hard-coding style
+		document.querySelector('.battle-round-result').style.display = 'none';
+		document.querySelector('.battle-action-row').style.display = 'flex';
+
 		let actionsContainer = document.querySelector('.battle-actions');
 
 		actionableMods.forEach(mod => {
@@ -153,6 +164,9 @@ class UIStateManager {
 	}
 
 	actionSelectHandler(event) {
+		document.querySelector('.battle-action-row').style.display = 'none';
+		document.querySelector('.battle-round-result').style.display = 'block';
+
 		dispatchEvent(new CustomEvent('battle_option_selected', {
 			detail: event.currentTarget.getAttribute('modid')
 		}));

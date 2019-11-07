@@ -59,7 +59,7 @@
 		"isOffensive":false,
 		"mod_type":"boost",
 		"damage_type":"laser",
-		"adjust_value":50,
+		"adjust_value":0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
 		"onActivate":""
@@ -72,7 +72,7 @@
 		"isOffensive":false,
 		"mod_type":"boost",
 		"damage_type":"gauss",
-		"adjust_value":50,
+		"adjust_value":0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
 		"onActivate":""
@@ -98,7 +98,7 @@
 		"isOffensive":false,
 		"mod_type":"react",
 		"damage_type":"drone",
-		"adjust_value":-50,
+		"adjust_value":-0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
 		"onActivate":""
@@ -111,7 +111,7 @@
 		"isOffensive":false,
 		"mod_type":"passive",
 		"damage_type":"shields",
-		"adjust_value":50,
+		"adjust_value":0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
 		"onActivate":""
@@ -124,7 +124,7 @@
 		"isOffensive":false,
 		"mod_type":"passive",
 		"damage_type":"armor",
-		"adjust_value":50,
+		"adjust_value":0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
 		"onActivate":""
