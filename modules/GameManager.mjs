@@ -9,8 +9,8 @@ class Player {
 		//this.id;
 		// TODO: Starting values from somewhere
 		this.name = name;
-		this.shieldsMax = 100;
-		this.armorMax = 100;
+		this.shieldsMax = 1;
+		this.armorMax = 1;
 		this.structureMax = 10;
 		this.mods = mods;
 		this.activatedMod = null;
@@ -86,6 +86,7 @@ class GameManager {
 	activateArms() {
 		console.log('activateArms');
 		this.selectedModIds = null;
+		this.uiStateManager.resetArms();
 	}
 
 	activateBattle() {
@@ -282,11 +283,11 @@ class GameManager {
 		let startingStructure = target.structure;
 		target.structure -= value;
 		target.structure = Math.round(target.structure);
-		let endingStructure = target.structure;
-		if (endingStructure < 0)
-			endingStructure = 0;
-		this.battleActions.push(this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingStructure - endingStructure, 'Structure'));
+		if (target.structure < 0)
+			target.structure = 0;
 
+		let endingStructure = target.structure;
+		this.battleActions.push(this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingStructure - endingStructure, 'Structure'));
 	}
 
 	getModsMatchingActivatedType(player, type) {
@@ -310,8 +311,14 @@ class GameManager {
 	}
 
 	checkGameOver() {
-		if (this.player1.structure <= 0 || this.player2.structure <= 0)
-			this.uiStateManager.activateState('.game-over-screen');
+		if (this.player1.structure <= 0 || this.player2.structure <= 0) {
+			if (this.player1.structure > 0 && this.player2.structure <= 0)
+				this.uiStateManager.showGameOver(this.player1);
+			else if (this.player1.structure <= 0 && this.player2 > 0)
+				this.uiStateManager.showGameOver(this.player2);
+			else
+				this.uiStateManager.showGameOver();
+		}
 		else
 			this.startBattleRound();
 

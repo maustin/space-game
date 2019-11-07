@@ -43,9 +43,9 @@
 		"adjust_scale":"absolute",
 		"hit_chance":1,
 		"onActivate":"activateMod",
-		"message_success":"$souce fires torpedoes and hit $target's $defense for $val points.",
-		"message_missed":"$source's torpedoes missed their target!",
-		"message_failed":"$target intercepted $sources's torpedoes!"
+		"message_success":"$souce fires Torpedoes and hit $target's $defense for $val points.",
+		"message_missed":"$source's Torpedoes missed their target!",
+		"message_failed":"$target intercepted $sources's Torpedoes!"
 	},
 	{
 		"id":"drones",
@@ -60,8 +60,8 @@
 		"hit_chance":1,
 		"onActivate":"activateMod",
 		"message_success":"Drones launched by $source hit $target's $defense for $val points.",
-		"message_missed":"$source's drones missed their target.",
-		"message_failed":"$source's drones failed to reach their target."
+		"message_missed":"$source's Drones missed their target.",
+		"message_failed":"$source's Drones failed to reach their target."
 	},
 	{
 		"id":"laser_amp",
@@ -75,7 +75,7 @@
 		"adjust_scale":"percent",
 		"hit_chance":1,
 		"onActivate":"",
-		"message_success":"$source focuses their lasers on $target!"
+		"message_success":"$source focuses their Lasers on $target!"
 	},
 	{
 		"id":"gauss_amp",

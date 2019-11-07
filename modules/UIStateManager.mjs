@@ -102,6 +102,21 @@ class UIStateManager {
 		return str;
 	}
 
+	resetArms() {
+		let leftGroup = document.querySelector('.left-mods-group');
+		let rightGroup = document.querySelector('.right-mods-group');
+
+		let selectedMods = Array.from(leftGroup.querySelectorAll('input:checked')).concat(
+			Array.from(rightGroup.querySelectorAll('input:checked')));
+
+		selectedMods.forEach(element => element.checked = false);
+
+		let unselectedMods = Array.from(leftGroup.querySelectorAll('input:not(:checked)')).concat(
+			Array.from(rightGroup.querySelectorAll('input:not(:checked)')));
+		
+		this.setModsIsDisabled(false, unselectedMods);
+	}	
+
 	modSelectHandler(event) {
 		let numSelected = 0;
 		let leftGroup = document.querySelector('.left-mods-group');
@@ -111,6 +126,8 @@ class UIStateManager {
 			Array.from(rightGroup.querySelectorAll('input:checked')));
 		let unselectedMods = Array.from(leftGroup.querySelectorAll('input:not(:checked)')).concat(
 			Array.from(rightGroup.querySelectorAll('input:not(:checked)')));
+
+		console.log(selectedMods[0]);
 
 		if (selectedMods.length == 3)
 			this.setModsIsDisabled(true, unselectedMods);
@@ -192,8 +209,16 @@ class UIStateManager {
 			detail: event.currentTarget.getAttribute('modid')
 		}));
 	}
-
 	
+	showGameOver(winner) {
+		this.activateState('.game-over-screen');
+
+		let messageElement = document.querySelector('.game-over-message');
+		if (winner)
+			messageElement.innerText = winner.name + " WINS!";
+		else
+			messageElement.innerText = "DRAW!";
+	}
 }
 
 
