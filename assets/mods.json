@@ -10,7 +10,10 @@
 		"adjust_value":10,
 		"adjust_scale":"absolute",
 		"hit_chance":1,
-		"onActivate":"activateLasers"
+		"onActivate":"activateLasers",
+		"message_success":"$source fired Lasers and hit $target's $defense for $val points.",
+		"message_missed":"$source fired Lasers and missed!",
+		"message_failed":""
 	},
 	{
 		"id":"gauss",
@@ -23,7 +26,10 @@
 		"adjust_value":10,
 		"adjust_scale":"absolute",
 		"hit_chance":1,
-		"onActivate":"activateGauss"
+		"onActivate":"activateGauss",
+		"message_success":"$source fired Gauss Cannon and hit $target's $defense for $val points.",
+		"message_missed":"$source fired Gauss Cannon and missed!",
+		"message_failed":""
 	},
 	{
 		"id":"torpedo",
@@ -36,7 +42,10 @@
 		"adjust_value":10,
 		"adjust_scale":"absolute",
 		"hit_chance":1,
-		"onActivate":"activateMod"
+		"onActivate":"activateMod",
+		"message_success":"$souce fires torpedoes and hit $target's $defense for $val points.",
+		"message_missed":"$source's torpedoes missed their target!",
+		"message_failed":"$target intercepted $sources's torpedoes!"
 	},
 	{
 		"id":"drones",
@@ -49,7 +58,10 @@
 		"adjust_value":10,
 		"adjust_scale":"absolute",
 		"hit_chance":1,
-		"onActivate":"activateMod"
+		"onActivate":"activateMod",
+		"message_success":"Drones launched by $source hit $target's $defense for $val points.",
+		"message_missed":"$source's drones missed their target.",
+		"message_failed":"$source's drones failed to reach their target."
 	},
 	{
 		"id":"laser_amp",
@@ -62,7 +74,8 @@
 		"adjust_value":0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
-		"onActivate":""
+		"onActivate":"",
+		"message_success":"$source focuses their lasers on $target!"
 	},
 	{
 		"id":"gauss_amp",
@@ -75,7 +88,8 @@
 		"adjust_value":0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
-		"onActivate":""
+		"onActivate":"",
+		"message_success":"$source charges their Gauss cannon!"
 	},
 	{
 		"id":"anti_torpedo",
@@ -88,7 +102,8 @@
 		"adjust_value":-100,
 		"adjust_scale":"percent",
 		"hit_chance":0.5,
-		"onActivate":""
+		"onActivate":"",
+		"message_success":"$source engages their Point Defense System."
 	},
 	{
 		"id":"anti_drone",
@@ -101,7 +116,8 @@
 		"adjust_value":-0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
-		"onActivate":""
+		"onActivate":"",
+		"message_success":"$source attempts to disrupt enemy drone communications."
 	},
 	{
 		"id":"shield_amp",
@@ -114,7 +130,8 @@
 		"adjust_value":0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
-		"onActivate":""
+		"onActivate":"",
+		"message_success":"coming soon"
 	},
 	{
 		"id":"armor_amp",
@@ -127,6 +144,7 @@
 		"adjust_value":0.5,
 		"adjust_scale":"percent",
 		"hit_chance":1,
-		"onActivate":""
+		"onActivate":"",
+		"message_success":"coming soon"
 	}
 ]}

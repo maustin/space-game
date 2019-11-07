@@ -1,4 +1,5 @@
 import { UI_STATES } from './UIStates.mjs';
+import { BattleAction } from './BattleAction.mjs';
 
 class UIStateManager {
 	constructor() {
@@ -126,6 +127,10 @@ class UIStateManager {
 		mods.forEach(element => element.parentElement.classList.toggle('is-disabled', isDisabled));
 	}
 
+	setRound(roundNum) {
+		document.querySelector('.battle-round').innerText = "Round " + roundNum;
+	}
+
 	updateBattleStats(player1, player2) {
 		this.updatePlayerStats(player1, document.querySelector('.battle-stats-left'));
 		this.updatePlayerStats(player2, document.querySelector('.battle-stats-right'));
@@ -154,6 +159,9 @@ class UIStateManager {
 
 		let actionsContainer = document.querySelector('.battle-actions');
 
+		while (actionsContainer.children.length > 0)
+			actionsContainer.children[0].remove();
+
 		actionableMods.forEach(mod => {
 			let action = document.createElement('p');
 			action.innerText = mod.useMessage;
@@ -161,6 +169,19 @@ class UIStateManager {
 			action.addEventListener('click', event => this.actionSelectHandler(event));
 			actionsContainer.appendChild(action);
 		});
+	}
+
+	displayBattleMessages(actions) {
+		//battle-round-result
+		let container = document.querySelector('.battle-round-result');
+		while (container.children.length > 0)
+			container.children[0].remove();
+
+		for (let action of actions) {
+			let newElement = document.createElement('p');
+			newElement.innerText = action.message;
+			container.appendChild(newElement);
+		}
 	}
 
 	actionSelectHandler(event) {
@@ -172,24 +193,8 @@ class UIStateManager {
 		}));
 	}
 
-	showBattleResult() {
-
-	}
+	
 }
 
 
 export { UIStateManager };
-
-// state
-//	0 splash
-//	1 instructions
-//	2 arms
-//	3 battle
-//		- Battle will have 2 substates: choose attack, resolve attack
-//	4 gameover
-
-
-
-// container element
-// original mode
-// continue callback
