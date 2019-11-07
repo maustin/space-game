@@ -227,17 +227,27 @@ meter::-webkit-meter-even-less-good-value {
     flex-direction: column;
 }
 
+.battle-screen header {
+    background-color: rgba(0,100,100,0.15);
+    height: 40px;
+}
+
 .battle-round-result {
-    width: 600px;
-    margin: 0 auto;
+    background-color: rgba(0,50,50,0.3);
+    /*width: 600px;*/
+    /*margin: 0 auto;*/
+    padding: 0 100px;
     /*display: block;*/
     display: none;
 }
 
 .battle-action-row {
+    background-color: rgba(0,50,50,0.3);
     /*display: none;*/
     display: flex;
     justify-content: center;
+    /*padding-top: -50px;*/
+    padding-bottom: 20px;
 }
 
 .battle-actions p {
@@ -264,9 +274,11 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 .battle-stats-row {
+    background-color: rgba(0,50,50,0.3);
     display: flex;
     justify-content: space-between;
-    margin: 0 20px 20px 20px;
+    /*margin: 0 20px 20px 20px;*/
+    padding: 5px 20px 5px 20px;
 }
 
 .battle-stats-row p {
