@@ -1,6 +1,8 @@
 # Space Game!
 (working title)
 
+[Play Now!](https://maustin.github.io/space-game/)
+
 ## Description
 Two ships face off in an epic 1v1 space battle!
 The base game will allow the player to battle against a computer opponent.
