@@ -64,6 +64,14 @@
         }
     },
     {
+        "src":"./assets/hit-1.png",
+        "id":"hit1",
+        "data":{
+            "regX":3,
+            "regY":3
+        }
+    },
+    {
         "src":"./assets/player-1.png",
         "id":"player1",
         "data":{
