@@ -151,10 +151,6 @@ class GameManager {
 	}
 
 	resolveBattle() {
-
-		this.checkGameOver();
-
-		return;
 		this.uiStateManager.prepareForBattleMessages();
 
 		// TODO: I think I really want no passive mods. Make everything an action.
@@ -185,8 +181,6 @@ class GameManager {
 		}
 
 		this.uiStateManager.displayBattleMessage(nextMessage);
-		// TODO: these should update continuously
-		//this.uiStateManager.updateBattleStats(this.player1, this.player2);
 		this.stageManager.displayBattleAction(nextMessage);
 
 		setTimeout(() => this.doBattleMessageLoop(), nextMessage.delay);

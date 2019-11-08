@@ -94,6 +94,79 @@ class StageManager {
 			this.displayLaserAction(battleAction);
 		else if (battleAction.mod.id == 'gauss')
 			this.displayGaussAction(battleAction);
+		else if (battleAction.mod.id == 'torpedo')
+			this.displayTorpedoAction(battleAction);
+	}
+
+	displayTorpedoAction(battleAction) {
+		let hardpoints = battleAction.source.data.hardpoints.filter(item => item.type == 'torpedo');
+		for (let i = 0; i < 2; i++) {
+			this.animationQueue.push(...this.buildTorpedoShot(battleAction, hardpoints[i]));
+		}
+	}
+
+	buildTorpedoShot(battleAction, hardpoint) {
+		let parts = [];
+		let targetPoint = this.getTargetHit(battleAction.target);
+
+		let sX = battleAction.source.displayObject.x + hardpoint.x;
+		let sY = battleAction.source.displayObject.y + hardpoint.y;
+		let tX = battleAction.target.displayObject.x + targetPoint.x;
+		let tY = battleAction.target.displayObject.y + targetPoint.y;
+
+		let diffX = tX - sX;
+		let diffY = tY - sY;
+		let distance = Math.sqrt((diffX * diffX) + (diffY * diffY));
+
+		let rads = Math.atan2(diffY, diffX);
+		let degrees = this.radiansToDegrees(rads);
+
+		let torpedoBitmap = this.createBitmap('torpedo-shot');
+		let bmBounds = torpedoBitmap.getBounds();
+
+		torpedoBitmap.x = sX;
+		torpedoBitmap.y = sY;
+
+		let torpedoEaseRotation = TweenMax.to(torpedoBitmap, 1, {rotation: 999, paused: true, ease: Linear.easeNone});
+		let torpedoEase = TweenMax.to(torpedoBitmap, 1, {x: tX, y: tY, paused: true, ease: Power1.easeIn, onComplete: function() {
+			stage.removeChild(this.target);
+		}});
+
+		parts.push(new DooDad(0, torpedoBitmap, [torpedoEaseRotation, torpedoEase]));
+
+		let torpedoMuzzle = this.createBitmap('torpedo-muzzle');
+		torpedoMuzzle.x = sX;
+		torpedoMuzzle.y = sY;
+		torpedoMuzzle.scale = 1.5;
+		if (battleAction.source.name != 'Player')
+			torpedoMuzzle.rotation = 180;
+
+		let torpedoMuzzleEase = TweenMax.to(torpedoMuzzle, 0.15, {scaleX: 0, scaleY: 1, paused: true, onComplete: function() {
+			stage.removeChild(this.target);
+		}})
+		
+		parts.push(new DooDad(0, torpedoMuzzle, torpedoMuzzleEase));
+
+		// TODO: This DEFINITELY needs to be broken out
+		let shrapnelCount = Math.floor(Math.random() * 5) + 10;
+		for (let i = 0; i < shrapnelCount; i++) {
+			let shrapBitmap = this.createBitmap('hit1');
+			shrapBitmap.x = tX;
+			shrapBitmap.y = tY;
+			shrapBitmap.scale = Math.random() * 2 + 1;
+			let newAngle = rads + (Math.random() * 1.5 - 0.75);
+			let d = Math.random() * 75 + 50;
+			let newX = Math.cos(newAngle) * d + tX;
+			let newY = Math.sin(newAngle) * d + tY;
+
+			let shrapEase = TweenLite.to(shrapBitmap, 1.2, {alpha: 0, x: newX, y: newY, rotation: Math.random() * 360, paused: true, ease: Power1.easeOut, onComplete: function() {
+				stage.removeChild(this.target);
+			}});
+
+			parts.push(new DooDad(1000 + i * 10, shrapBitmap, shrapEase));
+		}
+
+		return parts;
 	}
 
 	displayGaussAction(battleAction) {

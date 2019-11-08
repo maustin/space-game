@@ -88,6 +88,22 @@
         }
     },
     {
+        "src":"./assets/torpedo.png",
+        "id":"torpedo-shot",
+        "data":{
+            "regX":10,
+            "regY":10
+        }
+    },
+    {
+        "src":"./assets/torpedo-muzzle.png",
+        "id":"torpedo-muzzle",
+        "data":{
+            "regX":2,
+            "regY":12
+        }
+    },
+    {
         "src":"./assets/player-1.png",
         "id":"player1",
         "data":{
