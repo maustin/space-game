@@ -9,9 +9,8 @@ class StageManager {
 		this.assetManifest = null;
 		this.animationQueue = [];
 
-		createjs.Ticker.framerate = 30;
+		//createjs.Ticker.framerate = 30;
 		CustomEase.create('laser-shot', 'M0,0 C0.28,-1.3 0.79,0.208 1,0.51');
-		//CustomEase.create('laser-hit', 'M0,1,C0,0.702,-0.009,0,0.236,0,0.461,0,0.67,1,1,1');
 		CustomEase.create('laser-hit', "M0,0 C0,-0.6 0.041,-2.012 0.218,-2.012 0.391,-2.012 0.672,0 1,0");
 	}
 
@@ -79,10 +78,11 @@ class StageManager {
 
 	displayLaserAction(battleAction) {
 		let hardpoints = battleAction.source.data.hardpoints.filter(item => item.type == 'laser');
-		let numShots = 10;//Math.random() * 4
+		let numShots = 8;//Math.random() * 4
 		for (let i = 0; i < numShots; i++) {
 			this.animationQueue.push(...this.buildLaserShot(battleAction, hardpoints[Math.floor(Math.random() * hardpoints.length)], i));
 		}
+		console.log(" --- ");
 	}
 
 	buildLaserShot(battleAction, hardpoint, iteration) {
@@ -110,36 +110,42 @@ class StageManager {
 		hitBitmap.scale = 4;
 		hitBitmap.alpha = 0;
 
-		let hitTimeline = new TimelineLite({paused: true, delay: 0.15, onComplete: function() {
+		let hitTimeline = new TimelineLite({paused: true, onComplete: function() {
 			stage.removeChild(this.target);
 		}});
-		hitTimeline.to(hitBitmap, 0.08, {alpha: 1});
-		hitTimeline.to(hitBitmap, 0.6, {alpha: 0, ease: Power1.easeInOut});
+		hitTimeline.to(hitBitmap, 0.1, {alpha: 1});
+		hitTimeline.to(hitBitmap, 1.2, {alpha: 0, ease: Power1.easeInOut});
 
-		parts.push(new DooDad(200 * iteration, hitBitmap, hitTimeline));
+		parts.push(new DooDad(200 * iteration + 150, hitBitmap, hitTimeline));
 
-		/*let shrapnelCount = Math.floor(Math.random() * 5) + 3;
+		let shrapnelCount = 5;//10;// Math.floor(Math.random() * 5) + 3;
 		for (let i = 0; i < shrapnelCount; i++) {
 			let shrapBitmap = this.createBitmap('hit1');
 			shrapBitmap.x = tX;
 			shrapBitmap.y = tY;
-			let alphaEase = TweenLite.to(shrapBitmap, 0.6, {alpha: 0, delay})
-		}*/
+			shrapBitmap.scale = 2;
+			let newAngle = rads + (Math.random() * 1.5 - 0.75);
+			let d = Math.random() * 30 + 40;
+			let newX = Math.cos(newAngle) * d + tX;
+			let newY = Math.sin(newAngle) * d + tY;
+
+			let shrapEase = TweenLite.to(shrapBitmap, 1.5, {alpha: 0, x: newX, y: newY, rotation: Math.random() * 360, onComplete: function() {
+				stage.removeChild(this.target);
+			}})
+			parts.push(new DooDad(200 * iteration + 200, shrapBitmap, shrapEase));
+		}
 
 		let laserBitmap = this.createBitmap('laser');
 		let bmBounds = laserBitmap.getBounds();
 		
 		laserBitmap.x = sX;
 		laserBitmap.y = sY;
-		//laserBitmap.scaleX = distance / bmBounds.width;
 		let targetScale = distance / bmBounds.width;
 		laserBitmap.rotation = degrees;
 		laserBitmap.alpha = 0.7;
 
 		let scaleEase = TweenMax.to(laserBitmap, 0.15, {scaleX: targetScale, paused: true});
-
-		//let laserEase = TweenMax.fromTo(laserBitmap, 0.3, {alpha: 0.7}, {alpha: 0, paused: true, ease: 'laser-shot', onComplete: function() {
-		let laserEase = TweenMax.to(laserBitmap, 0.4, {alpha: 0, paused: true, ease: 'laser-shot', onComplete: function() {
+		let laserEase = TweenMax.to(laserBitmap, 0.5, {alpha: 0, paused: true, ease: 'laser-shot', onComplete: function() {
 				stage.removeChild(this.target);
 		}});
 
