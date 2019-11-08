@@ -92,15 +92,12 @@ class StageManager {
 	buildLaserShot(battleAction, hardpoint) {
 		let bitmap = this.createBitmap('laser');
 		let bmBounds = bitmap.getBounds();
-		let targetBounds = battleAction.target.displayObject.getBounds();
-		// TODO: make sure these actually hit
-		let tXOff = Math.floor(Math.random() * targetBounds.width);
-		let tYOff = Math.floor(Math.random() * targetBounds.height);
+		let targetPoint = this.getTargetHit(battleAction.target);
 
 		let sX = battleAction.source.displayObject.x + hardpoint.x;
 		let sY = battleAction.source.displayObject.y + hardpoint.y;
-		let tX = battleAction.target.displayObject.x + tXOff;
-		let tY = battleAction.target.displayObject.y + tYOff;
+		let tX = battleAction.target.displayObject.x + targetPoint.x;
+		let tY = battleAction.target.displayObject.y + targetPoint.y;
 
 		let diffX = tX - sX;
 		let diffY = tY - sY;
@@ -115,6 +112,20 @@ class StageManager {
 		bitmap.rotation = degrees;
 
 		return bitmap;
+	}
+
+	getTargetHit(target) {
+		let targetBounds = target.displayObject.getBounds();
+		let targetX;
+		let targetY;
+
+		do {
+			targetX = Math.floor(Math.random() * targetBounds.width);
+			targetY = Math.floor(Math.random() * targetBounds.height);
+		}
+		while (!target.displayObject.hitTest(targetX, targetY));
+
+		return { x: targetX, y: targetY };
 	}
 
 	createBitmap(assetId) {
