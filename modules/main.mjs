@@ -22,6 +22,7 @@ function handleFileComplete(event) {
 
 function handleQueueComplete(event) {
 	console.log("load queue complete");
+	stageManager.init();
 	uiManager.init();
 }
 

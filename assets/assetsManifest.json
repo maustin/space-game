@@ -56,6 +56,10 @@
         "id":"nebula-5"
     },
     {
+        "src":"./assets/laser.png",
+        "id":"laser"
+    },
+    {
         "src":"./assets/player-1.png",
         "id":"player1",
         "data":{

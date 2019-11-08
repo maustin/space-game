@@ -12,10 +12,11 @@ const BATTLE_MESSAGE_FAILED = 'message_failed';
 
 // TODO: This could extend Bitmap or such
 class Player {
-	constructor(name, mods, displayObject) {
+	constructor(name, mods, displayObject, data) {
 		this.name = name;
 		this.mods = mods;
 		this.displayObject = displayObject;
+		this.data = data;
 		//this.assetInstance = assetInstance;
 		// TODO: Starting values should come from JSON or something
 		this.shieldsMax = STARTING_SHIELDS;
@@ -122,8 +123,9 @@ class GameManager {
 
 		let selectedMods = this.modsData.filter(mod => selectedModIds.indexOf(mod.id) > -1);
 		let displayObject = this.stageManager.createBitmap(assetId);
+		let manifestObject = this.stageManager.getManifestObject(assetId);
 
-		return new Player(name, selectedMods, displayObject);
+		return new Player(name, selectedMods, displayObject, manifestObject.data);
 	}
 
 	startBattleRound() {
@@ -176,7 +178,9 @@ class GameManager {
 		this.uiStateManager.displayBattleMessages(this.battleActions);
 		this.uiStateManager.updateBattleStats(this.player1, this.player2);
 
-		setTimeout(() => this.checkGameOver(), 10000);
+		this.stageManager.displayBattleAction(this.battleActions[0]);
+
+		setTimeout(() => this.checkGameOver(), 5000);
 	}
 
 	getBoostedValue(source, target, adjustValue) {
@@ -254,7 +258,7 @@ class GameManager {
 				endingShields = 0;
 			this.battleActions.push(this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingShields - endingShields, 'Shields'));
 
-			if (target.shields > 0)
+			if (target.shields >= 0)
 				return;
 
 			// excess damage will overflow
@@ -281,7 +285,7 @@ class GameManager {
 				endingArmor = 0;
 			this.battleActions.push(this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingArmor - endingArmor, 'Armor'));
 
-			if (target.armor > 0)
+			if (target.armor >= 0)
 				return;
 
 			// overflow
