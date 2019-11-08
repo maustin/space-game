@@ -302,10 +302,10 @@ meter::-webkit-meter-even-less-good-value {
 /* Game Over */
 .game-over-screen {
     display: none;
-    /*display: flex;*/
     flex-direction: column;
-    justify-content: space-between;
-    height: 180px;
+    /*justify-content: space-between;*/
+    justify-content: center;
+    height: 600px;
     width: 800px;
     position: absolute;
     margin: 0 auto;
