@@ -1,4 +1,3 @@
-//import { AssetLibrary, AssetInstance } from './AssetLibrary.mjs';
 import { StageManager } from './StageManager.mjs';
 import { BattleAction } from './BattleAction.mjs';
 
@@ -17,7 +16,6 @@ class Player {
 		this.mods = mods;
 		this.displayObject = displayObject;
 		this.data = data;
-		//this.assetInstance = assetInstance;
 		// TODO: Starting values should come from JSON or something
 		this.shieldsMax = STARTING_SHIELDS;
 		this.armorMax = STARTING_ARMOR;
@@ -44,8 +42,6 @@ class Player {
 class GameManager {
 	constructor(uiStateManager, stageManager) {
 		this.uiStateManager = uiStateManager;
-		//this.canvasHandler = canvasHandler;
-		//this.assetLibrary = assetLibrary;
 		this.stageManager = stageManager;
 		this.modsData = null;
 		this.player1 = null;
@@ -66,7 +62,6 @@ class GameManager {
 	}
 
 	handleUIStateChanged(event) {
-		//this.canvasHandler.stop();
 		if (this[event.detail] != undefined)
 			this[event.detail]();
 	}
@@ -373,6 +368,10 @@ class GameManager {
 
 	activateGameOver() {
 		console.log('activateGameOver');
+		if (this.player1.structure <= 0)
+			this.stageManager.killPlayer(this.player1);
+		if (this.player2.structure <= 0)
+			this.stageManager.killPlayer(this.player2);
 	}
 }
 

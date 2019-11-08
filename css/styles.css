@@ -120,6 +120,7 @@ meter::-webkit-meter-even-less-good-value {
     height: 600px;
     position: absolute;
     display: none;
+    background-color: rgba(0,50,50,0.3);
     /*display: block;*/
 }
 
@@ -129,6 +130,11 @@ meter::-webkit-meter-even-less-good-value {
     font-style: normal;
     font-weight: normal;
     margin-bottom: 100px;
+}
+
+.game-over-message {
+    font-family: 'Slant', sans-serif;
+    font-size: 60px;
 }
 
 #play-single {
@@ -154,6 +160,7 @@ meter::-webkit-meter-even-less-good-value {
     display: none;
     /*display: flex;*/
     flex-direction: column;
+    background-color: rgba(0,50,50,0.3);
 }
 
 .instructions-content {
@@ -175,6 +182,8 @@ meter::-webkit-meter-even-less-good-value {
     /*display: grid;*/
     display: none;
     grid-template-rows: auto;
+    background-color: rgba(0,50,50,0.3);
+    
 }
 
 .arms-header {
@@ -228,8 +237,8 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 .battle-screen header {
-    background-color: rgba(0,100,100,0.15);
-    height: 40px;
+    background-color: rgba(0,50,50,0.3);
+    height: 45px;
 }
 
 .battle-round-result {

@@ -171,6 +171,17 @@ class StageManager {
 		return parts;
 	}
 
+	killPlayer(player) {
+		let displayObject = player.displayObject;
+		let targetX = 0;
+		if (player.name == "Player")
+			targetX = -200;
+		else
+			targetX = 200;
+
+		TweenLite.to(displayObject, 2, {alpha: 0, x: displayObject.x + targetX, ease: Power1.easeIn});
+	}
+
 	getTargetHit(target) {
 		let targetBounds = target.displayObject.getBounds();
 		let targetX;
