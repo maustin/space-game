@@ -2,6 +2,7 @@ const SHIP_EDGE_OFFSET = 30;
 const SHIP_VERT_BASELINE = 250;
 
 var stage = new createjs.Stage('canvas');
+var gCount = 0;
 
 class StageManager {
 	constructor(queue) {
@@ -82,7 +83,6 @@ class StageManager {
 		for (let i = 0; i < numShots; i++) {
 			this.animationQueue.push(...this.buildLaserShot(battleAction, hardpoints[Math.floor(Math.random() * hardpoints.length)], i));
 		}
-		console.log(" --- ");
 	}
 
 	buildLaserShot(battleAction, hardpoint, iteration) {
@@ -118,20 +118,23 @@ class StageManager {
 
 		parts.push(new DooDad(200 * iteration + 150, hitBitmap, hitTimeline));
 
-		let shrapnelCount = 5;//10;// Math.floor(Math.random() * 5) + 3;
+		let shrapnelCount = Math.floor(Math.random() * 5) + 3;
 		for (let i = 0; i < shrapnelCount; i++) {
 			let shrapBitmap = this.createBitmap('hit1');
 			shrapBitmap.x = tX;
 			shrapBitmap.y = tY;
-			shrapBitmap.scale = 2;
+			shrapBitmap.scale = Math.random() * 1 + 1;
 			let newAngle = rads + (Math.random() * 1.5 - 0.75);
-			let d = Math.random() * 30 + 40;
+			let d = Math.random() * 50 + 50;
 			let newX = Math.cos(newAngle) * d + tX;
 			let newY = Math.sin(newAngle) * d + tY;
+			shrapBitmap.name = "shrap-" + gCount;
+			gCount++;
 
-			let shrapEase = TweenLite.to(shrapBitmap, 1.5, {alpha: 0, x: newX, y: newY, rotation: Math.random() * 360, onComplete: function() {
+			let shrapEase = TweenLite.to(shrapBitmap, 1.5, {alpha: 0, x: newX, y: newY, rotation: Math.random() * 360, paused: true, ease: Power1.easeOut, onComplete: function() {
 				stage.removeChild(this.target);
-			}})
+			}});
+
 			parts.push(new DooDad(200 * iteration + 200, shrapBitmap, shrapEase));
 		}
 
@@ -214,6 +217,15 @@ class DooDad {
 		this.delay = delay;
 		this.displayObject = displayObject;
 		this.ease = ease;
+
+		/*displayObject.addEventListener('added', (event) => {
+			if (this.displayObject.name == null) return;
+			console.log("adding " + this.displayObject.name, this.displayObject.alpha, this.displayObject.x, this.displayObject.y);
+		})
+		displayObject.addEventListener('removed', (event) => {
+			if (this.displayObject.name == null) return;
+			console.log("removing " + this.displayObject.name, this.displayObject.alpha, this.displayObject.x, this.displayObject.y);
+		})*/
 	}
 
 	playEase() {
