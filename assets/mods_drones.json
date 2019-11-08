@@ -48,6 +48,22 @@
 		"message_failed":"$target intercepted $sources's Torpedoes!"
 	},
 	{
+		"id":"drones",
+		"name":"Assualt Drones",
+		"description":"Deal $val damage",
+		"useMessage": "Launch Drones",
+		"isOffensive":true,
+		"mod_type":"active",
+		"damage_type":"drone",
+		"adjust_value":10,
+		"adjust_scale":"absolute",
+		"hit_chance":1,
+		"onActivate":"activateMod",
+		"message_success":"Drones launched by $source hit $target's $defense for $val points.",
+		"message_missed":"$source's Drones missed their target.",
+		"message_failed":"$source's Drones failed to reach their target."
+	},
+	{
 		"id":"laser_amp",
 		"name":"Laser Focus",
 		"description":"Increases laser damage by $val",
@@ -88,6 +104,20 @@
 		"hit_chance":0.5,
 		"onActivate":"",
 		"message_success":"$source engages their Point Defense System."
+	},
+	{
+		"id":"anti_drone",
+		"name":"Drone Uplink Scrambler",
+		"description":"Reduce enemy drone damage by $val",
+		"useMessage": "",
+		"isOffensive":false,
+		"mod_type":"react",
+		"damage_type":"drone",
+		"adjust_value":-0.5,
+		"adjust_scale":"percent",
+		"hit_chance":1,
+		"onActivate":"",
+		"message_success":"$source attempts to disrupt enemy drone communications."
 	},
 	{
 		"id":"shield_amp",

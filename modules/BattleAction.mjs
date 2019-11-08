@@ -4,6 +4,7 @@ class BattleAction {
         this.target = target;
         this.message = message;
         this.mod = mod;
+        this.isVisible = true;
     }
 }
 

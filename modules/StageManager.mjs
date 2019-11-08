@@ -72,18 +72,22 @@ class StageManager {
 	}
 
 	displayBattleAction(battleAction) {
+		if (!battleAction.isVisible)
+			return;
+		
 		//if (battleAction.mod.id == 'laser')
 			this.displayLaserAction(battleAction);
 	}
 
 	displayLaserAction(battleAction) {
-		//let hits = [];
 		let hardpoints = battleAction.source.data.hardpoints.filter(item => item.type == 'laser');
 		let numShots = 8;//Math.random() * 4
 		for (let i = 0; i < numShots; i++) {
 			let shot = this.buildLaserShot(battleAction,
 				hardpoints[Math.floor(Math.random() * hardpoints.length)]);
-			let ease = TweenLite.to(shot, 0.5, {alpha: 0, paused:true});
+			let ease = TweenLite.to(shot, 0.5, {alpha: 0, paused:true, onComplete:function() {
+				stage.removeChild(this.target);
+			}});
 			this.animationQueue.push(new DooDad(200 * i, shot, ease));
 		}
 	}

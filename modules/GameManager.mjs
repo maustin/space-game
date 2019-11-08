@@ -168,9 +168,9 @@ class GameManager {
 		player2AdjustValue = this.getReactedValue(this.player2, this.player1, player2AdjustValue);
 
 		// Apply
-		console.log("Player 1:");
+		//console.log("Player 1:");
 		this.applyDamage(this.player1, this.player2, player1AdjustValue, this.player1.activatedMod);
-		console.log("Player 2:");
+		//console.log("Player 2:");
 		this.applyDamage(this.player2, this.player1, player2AdjustValue, this.player2.activatedMod);
 
 		// Play animation
@@ -188,11 +188,11 @@ class GameManager {
 		
 		boosts.forEach(mod => {
 			if (mod.adjust_scale == 'percent') {
-				console.log('Boost ' + adjustValue + ' by ' + mod.adjust_value + ' percent');
+				//console.log('Boost ' + adjustValue + ' by ' + mod.adjust_value + ' percent');
 				adjustValue += adjustValue * mod.adjust_value;
 			}
 			else {
-				console.log('Boost ' + adjustValue + ' by ' + mod.adjust_value + ' points');
+				//console.log('Boost ' + adjustValue + ' by ' + mod.adjust_value + ' points');
 				adjustValue += mod.adjust_value;
 			}
 
@@ -210,16 +210,16 @@ class GameManager {
 			if (mod.id == 'anti_torpedo') {
 				if (Math.random() < mod.hit_chance) {
 					adjustValue = 0;// torpedo was shot down
-					console.log('torpedo shot down');
+					//console.log('torpedo shot down');
 				}
 			}
 			else {
 				if (mod.adjust_value == 'percent') {
-					console.log('Reduce ' + adjustValue + ' by ' + mod.adjust_value + ' percent');
+					//console.log('Reduce ' + adjustValue + ' by ' + mod.adjust_value + ' percent');
 					adjustValue += adjustValue * mod.adjust_value;
 				}
 				else {
-					console.log('Reduce ' + adjustValue + ' by ' + mod.adjust_value + ' points');
+					//console.log('Reduce ' + adjustValue + ' by ' + mod.adjust_value + ' points');
 					adjustValue += mod.adjust_value;
 				}
 			}
@@ -227,28 +227,32 @@ class GameManager {
 			this.battleActions.push(this.buildBattleAction(source, target, mod, BATTLE_MESSAGE_SUCCESS));
 		});
 
-		console.log("returning", adjustValue);
+		//console.log("returning", adjustValue);
 
 		return adjustValue;
 	}
 
 	applyDamage(origin, target, value, mod) {
-		console.log("applyDamage", value);
+		//console.log("applyDamage", value);
 		if (value <= 0) {
 			this.battleActions.push(this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_FAILED));
 			return;
 		}
+
+		// showAnimation is set false after the first action.
+		// this is to prevent multiple shots displaying for each defense hit (shield, armor, structure)
+		let showAnimation = true;
 
 		if (target.shields > 0) {
 			let startingShields = target.shields;
 
 			if (origin.activatedMod.id == 'laser') {
 				target.shields -= value * 0.5;
-				console.log("Hit shields half for " + (value * 0.5));
+				//console.log("Hit shields half for " + (value * 0.5));
 			}
 			else {
 				target.shields -= value;
-				console.log("Hit shields for " + value);
+				//console.log("Hit shields for " + value);
 			}
 
 			// Rounding for now. Maybe revisit.
@@ -256,14 +260,18 @@ class GameManager {
 			let endingShields = target.shields;
 			if (endingShields < 0)
 				endingShields = 0;
-			this.battleActions.push(this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingShields - endingShields, 'Shields'));
+
+			let action = this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingShields - endingShields, 'Shields');
+			action.isVisible = showAnimation;
+			this.battleActions.push(action);
+			showAnimation = false;
 
 			if (target.shields >= 0)
 				return;
 
 			// excess damage will overflow
 			value = target.shields * -1;
-			console.log("Overflow shields by " + value);
+			//console.log("Overflow shields by " + value);
 			target.shields = 0;
 		}
 
@@ -271,11 +279,11 @@ class GameManager {
 			let startingArmor = target.armor;
 
 			if (origin.activatedMod.id == 'gauss') {
-				console.log("Hit armor half for " + (value * 0.5));
+				//console.log("Hit armor half for " + (value * 0.5));
 				target.armor -= value * 0.5;
 			}
 			else {
-				console.log("Hit armor for " + value);
+				//console.log("Hit armor for " + value);
 				target.armor -= value;
 			}
 
@@ -283,18 +291,23 @@ class GameManager {
 			let endingArmor = target.armor;
 			if (endingArmor < 0)
 				endingArmor = 0;
-			this.battleActions.push(this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingArmor - endingArmor, 'Armor'));
+
+
+			let action = this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingArmor - endingArmor, 'Armor');
+			action.isVisible = showAnimation;
+			this.battleActions.push(action);
+			showAnimation = false;
 
 			if (target.armor >= 0)
 				return;
 
 			// overflow
 			value = target.armor * -1;
-			console.log("Overflow armor by " + value);
+			//console.log("Overflow armor by " + value);
 			target.armor = 0;
 		}
 
-		console.log("Hit structure for " + value);
+		//console.log("Hit structure for " + value);
 		let startingStructure = target.structure;
 		target.structure -= value;
 		target.structure = Math.round(target.structure);
@@ -302,7 +315,9 @@ class GameManager {
 			target.structure = 0;
 
 		let endingStructure = target.structure;
-		this.battleActions.push(this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingStructure - endingStructure, 'Structure'));
+		let action = this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingStructure - endingStructure, 'Structure');
+		action.isVisible = showAnimation;
+		this.battleActions.push(action);
 	}
 
 	getModsMatchingActivatedType(player, type) {
