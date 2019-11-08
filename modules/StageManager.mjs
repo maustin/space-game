@@ -79,7 +79,7 @@ class StageManager {
 
 		p2dO.x = this.width + 100;
 		p2dO.y = this.height - SHIP_VERT_BASELINE - p2dO.getBounds().height * 0.5;
-		TweenLite.to(p2dO, 3, {x: p2TargetX, ease: Power2.easeOut});
+		TweenLite.to(p2dO, 2, {x: p2TargetX, ease: Power2.easeOut});
 
 		stage.addChild(p1dO);
 		stage.addChild(p2dO);

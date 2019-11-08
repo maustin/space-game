@@ -87,7 +87,6 @@ class GameManager {
 
 	activateSplash() {
 		console.log('activateSplash');
-		//this.canvasHandler.playStarfield();
 		this.stageManager.reset();
 	}
 
@@ -157,6 +156,8 @@ class GameManager {
 	}
 
 	resolveBattle() {
+		this.uiStateManager.prepareForBattleMessages();
+
 		// TODO: I think I really want no passive mods. Make everything an action.
 		// Until then...
 		let player1AdjustValue = this.player1.activatedMod.adjust_value;
@@ -171,19 +172,25 @@ class GameManager {
 		player2AdjustValue = this.getReactedValue(this.player2, this.player1, player2AdjustValue);
 
 		// Apply
-		//console.log("Player 1:");
 		this.applyDamage(this.player1, this.player2, player1AdjustValue, this.player1.activatedMod);
-		//console.log("Player 2:");
 		this.applyDamage(this.player2, this.player1, player2AdjustValue, this.player2.activatedMod);
 
-		// Play animation
-		// Animation, messages, and battle stats should prob all be tied together
-		this.uiStateManager.displayBattleMessages(this.battleActions);
-		this.uiStateManager.updateBattleStats(this.player1, this.player2);
+		this.doBattleMessageLoop();
+	}
 
-		this.stageManager.displayBattleAction(this.battleActions[0]);
+	doBattleMessageLoop() {
+		let nextMessage = this.battleActions.shift();
+		if (!nextMessage) {
+			this.checkGameOver();
+			return;
+		}
 
-		setTimeout(() => this.checkGameOver(), 5000);
+		this.uiStateManager.displayBattleMessage(nextMessage);
+		// TODO: these should update continuously
+		//this.uiStateManager.updateBattleStats(this.player1, this.player2);
+		this.stageManager.displayBattleAction(nextMessage);
+
+		setTimeout(() => this.doBattleMessageLoop(), nextMessage.delay);
 	}
 
 	getBoostedValue(source, target, adjustValue) {
@@ -248,76 +255,81 @@ class GameManager {
 
 		if (target.shields > 0) {
 			let startingShields = target.shields;
+			let endingShields = startingShields;
 
 			if (origin.activatedMod.id == 'laser') {
-				target.shields -= value * 0.5;
-				//console.log("Hit shields half for " + (value * 0.5));
+				endingShields -= value * 0.5;
 			}
 			else {
-				target.shields -= value;
-				//console.log("Hit shields for " + value);
+				endingShields -= value;
 			}
 
 			// Rounding for now. Maybe revisit.
-			target.shields = Math.round(target.shields);
-			let endingShields = target.shields;
-			if (endingShields < 0)
+			endingShields = Math.round(endingShields);
+			let overflow = 0;
+			
+			// if more than shields, set shields to 0, value to difference
+			if (endingShields < 0) {
+				overflow = 0 - endingShields;
 				endingShields = 0;
+			}
 
+			target.shields = endingShields;
 			let action = this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingShields - endingShields, 'Shields');
 			action.isVisible = showAnimation;
-			this.battleActions.push(action);
 			showAnimation = false;
+			this.battleActions.push(action);
 
-			if (target.shields >= 0)
+			// if shields left, we're done
+			if (target.shields > 0 || overflow == 0)
 				return;
 
-			// excess damage will overflow
-			value = target.shields * -1;
-			//console.log("Overflow shields by " + value);
-			target.shields = 0;
+			// otherwise, continue the damage down
+			value = overflow;
 		}
 
 		if (target.armor > 0) {
 			let startingArmor = target.armor;
+			let endingArmor = startingArmor;
 
 			if (origin.activatedMod.id == 'gauss') {
-				//console.log("Hit armor half for " + (value * 0.5));
-				target.armor -= value * 0.5;
+				endingArmor -= value * 0.5;
 			}
 			else {
-				//console.log("Hit armor for " + value);
-				target.armor -= value;
+				endingArmor -= value;
 			}
 
-			target.armor = Math.round(target.armor);
-			let endingArmor = target.armor;
-			if (endingArmor < 0)
+			endingArmor = Math.round(endingArmor);
+			let overflow = 0;
+
+			if (endingArmor < 0) {
+				overflow = 0 - endingArmor;
 				endingArmor = 0;
+			}
 
-
+			target.armor = endingArmor;
 			let action = this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingArmor - endingArmor, 'Armor');
 			action.isVisible = showAnimation;
-			this.battleActions.push(action);
 			showAnimation = false;
+			this.battleActions.push(action);
 
-			if (target.armor >= 0)
+			if (target.armor > 0 || overflow == 0)
 				return;
 
 			// overflow
-			value = target.armor * -1;
-			//console.log("Overflow armor by " + value);
-			target.armor = 0;
+			value = overflow;
 		}
 
-		//console.log("Hit structure for " + value);
 		let startingStructure = target.structure;
-		target.structure -= value;
-		target.structure = Math.round(target.structure);
-		if (target.structure < 0)
-			target.structure = 0;
+		let endingStructure = startingStructure;
 
-		let endingStructure = target.structure;
+		endingStructure -= value;
+		endingStructure = Math.round(endingStructure);
+		if (endingStructure < 0)
+			endingStructure = 0;
+
+		target.structure = endingStructure;
+
 		let action = this.buildBattleAction(origin, target, mod, BATTLE_MESSAGE_SUCCESS, startingStructure - endingStructure, 'Structure');
 		action.isVisible = showAnimation;
 		this.battleActions.push(action);
@@ -344,6 +356,8 @@ class GameManager {
 	}
 
 	checkGameOver() {
+		this.uiStateManager.updateBattleStats(this.player1, this.player2);
+
 		if (this.player1.structure <= 0 || this.player2.structure <= 0) {
 			if (this.player1.structure > 0 && this.player2.structure <= 0)
 				this.uiStateManager.showGameOver(this.player1);

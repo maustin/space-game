@@ -4,7 +4,12 @@ class BattleAction {
         this.target = target;
         this.message = message;
         this.mod = mod;
-        this.isVisible = true;
+        this.isVisible = false;
+        this.delay = 3000;
+        
+        this.shields = target.shields;
+        this.armor = target.armor;
+        this.structure = target.structure;
     }
 }
 

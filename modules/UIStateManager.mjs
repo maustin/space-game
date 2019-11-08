@@ -127,8 +127,6 @@ class UIStateManager {
 		let unselectedMods = Array.from(leftGroup.querySelectorAll('input:not(:checked)')).concat(
 			Array.from(rightGroup.querySelectorAll('input:not(:checked)')));
 
-		console.log(selectedMods[0]);
-
 		if (selectedMods.length == 3)
 			this.setModsIsDisabled(true, unselectedMods);
 		else if (selectedMods.length < 3)
@@ -149,11 +147,11 @@ class UIStateManager {
 	}
 
 	updateBattleStats(player1, player2) {
-		this.updatePlayerStats(player1, document.querySelector('.battle-stats-left'));
-		this.updatePlayerStats(player2, document.querySelector('.battle-stats-right'));
+		this.updatePlayerStats(player1, document.querySelector('.battle-stats-left'), player1.shields, player1.armor, player1.structure);
+		this.updatePlayerStats(player2, document.querySelector('.battle-stats-right'), player2.shields, player2.armor, player2.structure);
 	}
-
-	updatePlayerStats(player, container) {
+	
+	updatePlayerStats(player, container, shields, armor, structure) {
 		let shieldValue = container.querySelector('.shield-value');
 		let shieldMeter = container.querySelector('.shield-meter');
 		let armorValue = container.querySelector('.armor-value');
@@ -161,12 +159,17 @@ class UIStateManager {
 		let structureValue = container.querySelector('.structure-value');
 		let structureMeter = container.querySelector('.structure-meter');
 
-		shieldValue.innerText = player.shields + "/" + player.shieldsMax;
-		shieldMeter.value = player.shields / player.shieldsMax;
-		armorValue.innerText = player.armor + "/" + player.armorMax;
-		armorMeter.value = player.armor / player.armorMax;
-		structureValue.innerText = player.structure + "/" + player.structureMax;
-		structureMeter.value = player.structure / player.structureMax;
+		shieldValue.innerText = shields + "/" + player.shieldsMax;
+		if (shieldMeter.value != shields / player.shieldsMax)
+			TweenLite.to(shieldMeter, 1, {value: shields / player.shieldsMax});
+		
+		armorValue.innerText = armor + "/" + player.armorMax;
+		if (armorMeter.value != armor / player.armorMax)
+			TweenLite.to(armorMeter, 1, {value: armor / player.armorMax});
+		
+		structureValue.innerText = structure + "/" + player.structureMax;
+		if (structureMeter.value != structure / player.structureMax)
+			TweenLite.to(structureMeter, 1, {value: structure / player.structureMax});
 	}
 
 	showBattleOptions(actionableMods) {
@@ -188,17 +191,26 @@ class UIStateManager {
 		});
 	}
 
-	displayBattleMessages(actions) {
-		//battle-round-result
+	prepareForBattleMessages() {
 		let container = document.querySelector('.battle-round-result');
 		while (container.children.length > 0)
 			container.children[0].remove();
+	}
 
-		for (let action of actions) {
-			let newElement = document.createElement('p');
-			newElement.innerText = action.message;
-			container.appendChild(newElement);
-		}
+	displayBattleMessage(action) {
+		let container = document.querySelector('.battle-round-result');
+		let newElement = document.createElement('p');
+		newElement.innerText = action.message;
+		container.appendChild(newElement);
+
+		let statsContainer;
+		// it's late and I'm getting hacky
+		if (action.target.name == 'Player')
+			statsContainer = document.querySelector('.battle-stats-left');
+		else
+			statsContainer = document.querySelector('.battle-stats-right');
+
+		this.updatePlayerStats(action.target, statsContainer, action.shields, action.armor, action.structure);
 	}
 
 	actionSelectHandler(event) {
