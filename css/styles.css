@@ -22,12 +22,6 @@ body {
     user-select: none;
 }
 
-/*div {
-    width: 800;
-    align-self: center;
-    background: #000000;
-}*/
-
 h1, h2, h3, h4, p, label {
     color: #1eb7d9;
 }
@@ -120,7 +114,7 @@ meter::-webkit-meter-even-less-good-value {
     height: 600px;
     position: absolute;
     display: none;
-    background-color: rgba(0,50,50,0.3);
+    background-color: rgba(0,40,60,0.5);
     /*display: block;*/
 }
 
@@ -160,7 +154,7 @@ meter::-webkit-meter-even-less-good-value {
     display: none;
     /*display: flex;*/
     flex-direction: column;
-    background-color: rgba(0,50,50,0.3);
+    background-color: rgba(0,40,60,0.5);
 }
 
 .instructions-content {
@@ -182,7 +176,7 @@ meter::-webkit-meter-even-less-good-value {
     /*display: grid;*/
     display: none;
     grid-template-rows: auto;
-    background-color: rgba(0,50,50,0.3);
+    background-color: rgba(0,40,60,0.5);
     
 }
 
@@ -237,12 +231,12 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 .battle-screen header {
-    background-color: rgba(0,50,50,0.3);
+    background-color: rgba(0,40,60,0.5);
     height: 45px;
 }
 
 .battle-round-result {
-    background-color: rgba(0,50,50,0.3);
+    background-color: rgba(0,40,60,0.5);
     /*width: 600px;*/
     /*margin: 0 auto;*/
     padding: 0 100px;
@@ -251,7 +245,7 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 .battle-action-row {
-    background-color: rgba(0,50,50,0.3);
+    background-color: rgba(0,40,60,0.5);
     /*display: none;*/
     display: flex;
     justify-content: center;
@@ -283,7 +277,7 @@ meter::-webkit-meter-even-less-good-value {
 }
 
 .battle-stats-row {
-    background-color: rgba(0,50,50,0.3);
+    background-color: rgba(0,40,60,0.5);
     display: flex;
     justify-content: space-between;
     /*margin: 0 20px 20px 20px;*/
