@@ -1,12 +1,7 @@
 const SHIP_EDGE_OFFSET = 30;
 const SHIP_VERT_BASELINE = 250;
 
-// Doing this in the global cause maybe warranted?
 var stage = new createjs.Stage('canvas');
-/*createjs.Ticker.addEventListener("tick", handleTick);
-function handleTick() {
-	stage.update();
-}*/
 
 class StageManager {
 	constructor(queue) {
@@ -15,6 +10,7 @@ class StageManager {
 		this.animationQueue = [];
 
 		createjs.Ticker.framerate = 30;
+		CustomEase.create('laser-shot', 'M0,0 C0.28,-1.3 0.79,0.208 1,0.51');
 	}
 
 	init() {
@@ -85,7 +81,8 @@ class StageManager {
 		for (let i = 0; i < numShots; i++) {
 			let shot = this.buildLaserShot(battleAction,
 				hardpoints[Math.floor(Math.random() * hardpoints.length)]);
-			let ease = TweenLite.to(shot, 0.5, {alpha: 0, paused:true, onComplete:function() {
+			//shot.alpha = 0.7;
+			let ease = TweenMax.to(shot, 0.3, {alpha: 0, paused:true, ease: 'laser-shot', onComplete: function() {
 				stage.removeChild(this.target);
 			}});
 			this.animationQueue.push(new DooDad(200 * i, shot, ease));
@@ -117,13 +114,21 @@ class StageManager {
 		bitmap.scaleX = distance / bmBounds.width;
 		bitmap.rotation = degrees;
 
-		//stage.addChild(bitmap);
 		return bitmap;
 	}
 
 	createBitmap(assetId) {
 		// TODO: Should we same obj name to assetId?
-		return new createjs.Bitmap(this.queue.getResult(assetId));
+		let bitmap = new createjs.Bitmap(this.queue.getResult(assetId));
+		let manifest = this.getManifestObject(assetId);
+		if (manifest.data) {
+			if (!isNaN(manifest.data.regX))
+				bitmap.regX = manifest.data.regX;
+			if (!isNaN(manifest.data.regY)) {
+				bitmap.regY = manifest.data.regY;
+			}
+		}
+		return bitmap;
 	}
 
 	getRandomIdFromPartial(partialId) {
