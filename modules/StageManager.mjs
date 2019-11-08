@@ -2,21 +2,38 @@ const SHIP_EDGE_OFFSET = 30;
 const SHIP_VERT_BASELINE = 250;
 
 var stage = new createjs.Stage('canvas');
-var gCount = 0;
 
 class StageManager {
 	constructor(queue) {
 		this.queue = queue;
 		this.assetManifest = null;
 		this.animationQueue = [];
+		this.width = stage.canvas.width;
+		this.height = stage.canvas.height;
 
-		//createjs.Ticker.framerate = 30;
+		createjs.Ticker.framerate = 30;
 		CustomEase.create('laser-shot', 'M0,0 C0.28,-1.3 0.79,0.208 1,0.51');
 		CustomEase.create('laser-hit', "M0,0 C0,-0.6 0.041,-2.012 0.218,-2.012 0.391,-2.012 0.672,0 1,0");
 	}
 
 	init() {
 		createjs.Ticker.addEventListener('tick', (event)=> this.handleTick(event));
+
+		let stars = this.createBitmap('stars');
+		let nebula = this.createBitmap(this.getRandomIdFromPartial('nebula'));
+		let planet = this.createBitmap(this.getRandomIdFromPartial('planet'));
+
+		let nebulaBounds = nebula.getBounds();
+		nebula.x = this.getNicePosition(nebulaBounds.width, this.width);
+		nebula.y = this.getNicePosition(nebulaBounds.height, this.height);
+
+		let planetBounds = planet.getBounds();
+		planet.x = this.getNicePosition(planetBounds.width, this.width);
+		planet.y = this.getNicePosition(planetBounds.height, this.height);
+
+		stage.addChild(stars);
+		stage.addChild(nebula);
+		stage.addChild(planet);
 	}
 
 	handleTick(event) {
@@ -36,34 +53,33 @@ class StageManager {
 		this.assetManifest = assetManifest;
 	}
 
+	reset() {
+		// hard coooooode
+		let p1 = stage.children.find(child => child.name == 'player1');
+		let p2 = stage.children.find(child => child.name == 'player2');
+
+		if (p1)
+			stage.removeChild(p1);
+		if (p2)
+			stage.removeChild(p2);
+	}
+
 	setupBattleScreen(player1, player2) {
-		let w = stage.canvas.width;
-		let h = stage.canvas.height;
-
-		let stars = this.createBitmap('stars');
-		let nebula = this.createBitmap(this.getRandomIdFromPartial('nebula'));
-		let planet = this.createBitmap(this.getRandomIdFromPartial('planet'));
-
-		let nebulaBounds = nebula.getBounds();
-		nebula.x = this.getNicePosition(nebulaBounds.width, w);
-		nebula.y = this.getNicePosition(nebulaBounds.height, h);
-
-		let planetBounds = planet.getBounds();
-		planet.x = this.getNicePosition(planetBounds.width, w);
-		planet.y = this.getNicePosition(planetBounds.height, h);
-
 		let p1dO = player1.displayObject;
+		let p1Bounds = p1dO.getBounds();
+		let p1TargetX = SHIP_EDGE_OFFSET;
+
+		p1dO.x = -100 - p1Bounds.width;
+		p1dO.y = this.height - SHIP_VERT_BASELINE - p1dO.getBounds().height * 0.5;
+		TweenLite.to(p1dO, 3, {x: p1TargetX, ease: Power2.easeOut});
+
 		let p2dO = player2.displayObject;
+		let p2Bounds = p2dO.getBounds();
+		let p2TargetX = this.width - SHIP_EDGE_OFFSET - p2dO.getBounds().width;
 
-		p1dO.x = SHIP_EDGE_OFFSET;
-		p1dO.y = h - SHIP_VERT_BASELINE - p1dO.getBounds().height * 0.5;
-
-		p2dO.x = w - SHIP_EDGE_OFFSET - p2dO.getBounds().width;
-		p2dO.y = h - SHIP_VERT_BASELINE - p2dO.getBounds().height * 0.5;
-
-		stage.addChild(stars);
-		stage.addChild(nebula);
-		stage.addChild(planet);
+		p2dO.x = this.width + 100;
+		p2dO.y = this.height - SHIP_VERT_BASELINE - p2dO.getBounds().height * 0.5;
+		TweenLite.to(p2dO, 3, {x: p2TargetX, ease: Power2.easeOut});
 
 		stage.addChild(p1dO);
 		stage.addChild(p2dO);
@@ -73,13 +89,13 @@ class StageManager {
 		if (!battleAction.isVisible)
 			return;
 		
-		//if (battleAction.mod.id == 'laser')
+		if (battleAction.mod.id == 'laser')
 			this.displayLaserAction(battleAction);
 	}
 
 	displayLaserAction(battleAction) {
 		let hardpoints = battleAction.source.data.hardpoints.filter(item => item.type == 'laser');
-		let numShots = 8;//Math.random() * 4
+		let numShots = Math.random() * 4 + 4;
 		for (let i = 0; i < numShots; i++) {
 			this.animationQueue.push(...this.buildLaserShot(battleAction, hardpoints[Math.floor(Math.random() * hardpoints.length)], i));
 		}
@@ -128,8 +144,6 @@ class StageManager {
 			let d = Math.random() * 50 + 50;
 			let newX = Math.cos(newAngle) * d + tX;
 			let newY = Math.sin(newAngle) * d + tY;
-			shrapBitmap.name = "shrap-" + gCount;
-			gCount++;
 
 			let shrapEase = TweenLite.to(shrapBitmap, 1.5, {alpha: 0, x: newX, y: newY, rotation: Math.random() * 360, paused: true, ease: Power1.easeOut, onComplete: function() {
 				stage.removeChild(this.target);
@@ -217,15 +231,6 @@ class DooDad {
 		this.delay = delay;
 		this.displayObject = displayObject;
 		this.ease = ease;
-
-		/*displayObject.addEventListener('added', (event) => {
-			if (this.displayObject.name == null) return;
-			console.log("adding " + this.displayObject.name, this.displayObject.alpha, this.displayObject.x, this.displayObject.y);
-		})
-		displayObject.addEventListener('removed', (event) => {
-			if (this.displayObject.name == null) return;
-			console.log("removing " + this.displayObject.name, this.displayObject.alpha, this.displayObject.x, this.displayObject.y);
-		})*/
 	}
 
 	playEase() {

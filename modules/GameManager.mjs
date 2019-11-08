@@ -88,6 +88,7 @@ class GameManager {
 	activateSplash() {
 		console.log('activateSplash');
 		//this.canvasHandler.playStarfield();
+		this.stageManager.reset();
 	}
 
 	activateInstructions() {
@@ -124,6 +125,8 @@ class GameManager {
 		let selectedMods = this.modsData.filter(mod => selectedModIds.indexOf(mod.id) > -1);
 		let displayObject = this.stageManager.createBitmap(assetId);
 		let manifestObject = this.stageManager.getManifestObject(assetId);
+
+		displayObject.name = assetId;
 
 		return new Player(name, selectedMods, displayObject, manifestObject.data);
 	}
