@@ -72,6 +72,22 @@
         }
     },
     {
+        "src":"./assets/gauss-muzzle.png",
+        "id":"gauss-muzzle",
+        "data":{
+            "regX":9,
+            "regY":27
+        }
+    },
+    {
+        "src":"./assets/gauss-shot.png",
+        "id":"gauss-shot",
+        "data":{
+            "regX":2,
+            "regY":3
+        }
+    },
+    {
         "src":"./assets/player-1.png",
         "id":"player1",
         "data":{

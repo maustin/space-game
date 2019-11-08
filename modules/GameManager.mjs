@@ -151,6 +151,10 @@ class GameManager {
 	}
 
 	resolveBattle() {
+
+		this.checkGameOver();
+
+		return;
 		this.uiStateManager.prepareForBattleMessages();
 
 		// TODO: I think I really want no passive mods. Make everything an action.
@@ -351,15 +355,16 @@ class GameManager {
 	}
 
 	checkGameOver() {
-		this.uiStateManager.updateBattleStats(this.player1, this.player2);
-
 		if (this.player1.structure <= 0 || this.player2.structure <= 0) {
-			if (this.player1.structure > 0 && this.player2.structure <= 0)
+			if (this.player1.structure > 0) {
 				this.uiStateManager.showGameOver(this.player1);
-			else if (this.player1.structure <= 0 && this.player2 > 0)
+			}
+			else if (this.player2.structure > 0) {
 				this.uiStateManager.showGameOver(this.player2);
-			else
+			}
+			else {
 				this.uiStateManager.showGameOver();
+			}
 		}
 		else
 			this.startBattleRound();

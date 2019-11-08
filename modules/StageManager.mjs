@@ -13,7 +13,8 @@ class StageManager {
 
 		createjs.Ticker.framerate = 30;
 		CustomEase.create('laser-shot', 'M0,0 C0.28,-1.3 0.79,0.208 1,0.51');
-		CustomEase.create('laser-hit', "M0,0 C0,-0.6 0.041,-2.012 0.218,-2.012 0.391,-2.012 0.672,0 1,0");
+		CustomEase.create('laser-hit', 'M0,0 C0,-0.6 0.041,-2.012 0.218,-2.012 0.391,-2.012 0.672,0 1,0');
+		CustomEase.create('gauss-muzzle', 'M0,0.308,C0.062,-0.87,0.919,0.438,1,1');
 	}
 
 	init() {
@@ -91,6 +92,98 @@ class StageManager {
 		
 		if (battleAction.mod.id == 'laser')
 			this.displayLaserAction(battleAction);
+		else if (battleAction.mod.id == 'gauss')
+			this.displayGaussAction(battleAction);
+	}
+
+	displayGaussAction(battleAction) {
+		let hardpoints = battleAction.source.data.hardpoints.filter(item => item.type == 'gauss');
+		let numShots = 6;
+		let targetPoint1 = this.getTargetHit(battleAction.target);
+		let targetPoint2 = this.getTargetHit(battleAction.target);
+		// TODO: ability to get target point from top or bottom half of target
+		// 		 looks strange for weapons to cross the ship center line
+		/*if (targetPoint1.y > targetPoint2.y) {
+			// Yarp
+			let temp = targetPoint2;
+			targetPoint2 = targetPoint1;
+			targetPoint2 = temp;
+		}*/
+
+		for (let i = 0; i < numShots; i++) {
+			// hardcody!
+			if (i % 2 == 0)
+				this.animationQueue.push(...this.buildGaussShot(battleAction, hardpoints[0], i, targetPoint1));
+			else
+				this.animationQueue.push(...this.buildGaussShot(battleAction, hardpoints[1], i, targetPoint2));
+		}
+	}
+
+	buildGaussShot(battleAction, hardpoint, iteration, targetPoint) {
+		let parts = [];
+
+		// TODO: Repeated math, consolidate
+		let sX = battleAction.source.displayObject.x + hardpoint.x;
+		let sY = battleAction.source.displayObject.y + hardpoint.y;
+		let tX = battleAction.target.displayObject.x + targetPoint.x;
+		let tY = battleAction.target.displayObject.y + targetPoint.y;
+
+		let diffX = tX - sX;
+		let diffY = tY - sY;
+		let distance = Math.sqrt((diffX * diffX) + (diffY * diffY));
+
+		let rads = Math.atan2(diffY, diffX);
+		let degrees = this.radiansToDegrees(rads);
+
+		// TODO: Yep, LOTS of repeated math - refactor when it's not almost 6am.
+		//let hitBitmap = this.createBitmap
+
+		let gaussBitmap = this.createBitmap('gauss-shot');
+		let bmBounds = gaussBitmap.getBounds();
+
+		gaussBitmap.x = sX;
+		gaussBitmap.y = sY;
+		gaussBitmap.rotation = degrees;
+		gaussBitmap.scale = 1;
+
+		let gaussEase = TweenMax.to(gaussBitmap, 0.5, {x: tX, y: tY, paused: true, onComplete: function() {
+				stage.removeChild(this.target);
+		}});
+		
+		parts.push(new DooDad(200 * iteration, gaussBitmap, gaussEase));
+
+		let gaussMuzzle = this.createBitmap('gauss-muzzle');
+		gaussMuzzle.x = sX;
+		gaussMuzzle.y = sY;
+		// Moar hardcody! Bad Mike!
+		if (battleAction.source.name != 'Player')
+			gaussMuzzle.rotation = 180;
+
+		let gaussMuzzleScaleEase = TweenMax.to(gaussMuzzle, 0.2, {scale: 0.3, paused: true});
+		let gaussMuzzleAlphaEase = TweenMax.to(gaussMuzzle, 0.2, {alpha: 0, paused: true, delay: 0.1, onComplete: function() {
+			stage.removeChild(this.target);
+		}});
+		parts.push(new DooDad(200 * iteration, gaussMuzzle, [gaussMuzzleScaleEase, gaussMuzzleAlphaEase]));
+
+		let shrapnelCount = Math.floor(Math.random() * 5) + 4;
+		for (let i = 0; i < shrapnelCount; i++) {
+			let shrapBitmap = this.createBitmap('hit1');
+			shrapBitmap.x = tX;
+			shrapBitmap.y = tY;
+			shrapBitmap.scale = Math.random() * 1 + 1;
+			let newAngle = rads + (Math.random() * 1.5 - 0.75);
+			let d = Math.random() * 50 + 50;
+			let newX = Math.cos(newAngle) * d + tX;
+			let newY = Math.sin(newAngle) * d + tY;
+
+			let shrapEase = TweenLite.to(shrapBitmap, 1.5, {alpha: 0, x: newX, y: newY, rotation: Math.random() * 360, paused: true, ease: Power1.easeOut, onComplete: function() {
+				stage.removeChild(this.target);
+			}});
+
+			parts.push(new DooDad(200 * iteration + 450, shrapBitmap, shrapEase));
+		}
+
+		return parts;
 	}
 
 	displayLaserAction(battleAction) {
