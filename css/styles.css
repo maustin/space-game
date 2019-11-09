@@ -4,8 +4,8 @@ font-family: 'Exo 2', sans-serif;
 */
 @font-face {
     font-family: 'Slant';
-    src: url('maustin.github.io/space-game/fonts/subset-Slant.woff2') format('woff2'),
-        url('maustin.github.io/space-game/fonts/subset-Slant.woff') format('woff');
+    src: url('./fonts/subset-Slant.woff2') format('woff2'),
+        url('./fonts/subset-Slant.woff') format('woff');
     font-weight: 100;
     font-style: normal;
 }
